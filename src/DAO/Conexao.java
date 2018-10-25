@@ -5,7 +5,8 @@
  */
 package DAO;
 
-import com.mysql.jdbc.Connection;
+
+import java.sql.Connection;
 import java.sql.DriverManager;
 import javax.swing.JOptionPane;
 
@@ -17,7 +18,7 @@ public class Conexao {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             String url = "jdbc:mysql://localhost/locadora";
-            con = (Connection) DriverManager.getConnection(url, "root", "123");
+            con = (Connection) DriverManager.getConnection(url, "root", "");
         } catch (Exception e) {
     JOptionPane.showMessageDialog(null, "erro na conexao com o banco",
             "video locadora", JOptionPane.ERROR_MESSAGE);
