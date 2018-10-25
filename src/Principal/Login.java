@@ -73,7 +73,6 @@ public class Login extends javax.swing.JFrame {
             }
         });
 
-        pfSenha.setText("jPasswordField1");
         pfSenha.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 pfSenhaActionPerformed(evt);
