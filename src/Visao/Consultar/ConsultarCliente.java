@@ -37,6 +37,8 @@ public class ConsultarCliente extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -67,10 +69,14 @@ public class ConsultarCliente extends javax.swing.JFrame {
         jLabel2.setBounds(20, 20, 160, 50);
         jPanel1.add(jTextField2);
         jTextField2.setBounds(640, 30, 96, 32);
+
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/pesquisar.jpg"))); // NOI18N
         jPanel1.add(jButton1);
-        jButton1.setBounds(370, 30, 66, 29);
+        jButton1.setBounds(370, 30, 40, 29);
+
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/pesquisar.jpg"))); // NOI18N
         jPanel1.add(jButton2);
-        jButton2.setBounds(750, 30, 62, 30);
+        jButton2.setBounds(750, 30, 40, 30);
 
         jButton3.setText("TODOS");
         jPanel1.add(jButton3);
@@ -78,6 +84,27 @@ public class ConsultarCliente extends javax.swing.JFrame {
 
         getContentPane().add(jPanel1);
         jPanel1.setBounds(0, 0, 1010, 90);
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Código", "Cliente", "RG", "CPF", "Telefone", "Email"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(jTable1);
+
+        getContentPane().add(jScrollPane1);
+        jScrollPane1.setBounds(20, 110, 960, 402);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -126,6 +153,8 @@ public class ConsultarCliente extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     // End of variables declaration//GEN-END:variables
