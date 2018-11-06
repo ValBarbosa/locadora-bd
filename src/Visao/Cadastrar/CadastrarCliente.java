@@ -5,6 +5,12 @@
  */
 package Visao.Cadastrar;
 
+import DAO.ClienteDAO;
+import DAO.Conexao;
+import Modelo.Cliente;
+import java.sql.Connection;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Valéria
@@ -37,21 +43,21 @@ public class CadastrarCliente extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
+        jtf_numero = new javax.swing.JTextField();
+        Jtf_nome = new javax.swing.JTextField();
+        jtf_rg = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
-        jFormattedTextField2 = new javax.swing.JFormattedTextField();
-        jFormattedTextField3 = new javax.swing.JFormattedTextField();
+        jtf_cpf = new javax.swing.JFormattedTextField();
+        jtf_telefone = new javax.swing.JFormattedTextField();
         jLabel10 = new javax.swing.JLabel();
-        jFormattedTextField4 = new javax.swing.JFormattedTextField();
-        jTextField4 = new javax.swing.JTextField();
+        Jtf_nascimento = new javax.swing.JFormattedTextField();
+        jtf_rua = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
         jTextField5 = new javax.swing.JTextField();
-        jTextField6 = new javax.swing.JTextField();
+        jtf_bairro = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
-        jFormattedTextField5 = new javax.swing.JFormattedTextField();
-        jTextField7 = new javax.swing.JTextField();
+        jtf_cep = new javax.swing.JFormattedTextField();
+        jtf_email = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
@@ -122,12 +128,14 @@ public class CadastrarCliente extends javax.swing.JFrame {
         jLabel8.setText("Bairro");
         getContentPane().add(jLabel8);
         jLabel8.setBounds(40, 380, 70, 30);
-        getContentPane().add(jTextField1);
-        jTextField1.setBounds(130, 130, 190, 30);
-        getContentPane().add(jTextField2);
-        jTextField2.setBounds(130, 170, 700, 30);
-        getContentPane().add(jTextField3);
-        jTextField3.setBounds(130, 220, 250, 30);
+
+        jtf_numero.setEditable(false);
+        getContentPane().add(jtf_numero);
+        jtf_numero.setBounds(130, 130, 190, 30);
+        getContentPane().add(Jtf_nome);
+        Jtf_nome.setBounds(130, 170, 700, 30);
+        getContentPane().add(jtf_rg);
+        jtf_rg.setBounds(130, 220, 250, 30);
 
         jLabel9.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel9.setText("Email");
@@ -135,20 +143,20 @@ public class CadastrarCliente extends javax.swing.JFrame {
         jLabel9.setBounds(30, 430, 60, 30);
 
         try {
-            jFormattedTextField2.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
+            jtf_cpf.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
-        getContentPane().add(jFormattedTextField2);
-        jFormattedTextField2.setBounds(460, 220, 370, 30);
+        getContentPane().add(jtf_cpf);
+        jtf_cpf.setBounds(460, 220, 370, 30);
 
         try {
-            jFormattedTextField3.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##)###-#####")));
+            jtf_telefone.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##)###-#####")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
-        getContentPane().add(jFormattedTextField3);
-        jFormattedTextField3.setBounds(130, 270, 250, 30);
+        getContentPane().add(jtf_telefone);
+        jtf_telefone.setBounds(130, 270, 250, 30);
 
         jLabel10.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel10.setText("CPF:");
@@ -156,14 +164,14 @@ public class CadastrarCliente extends javax.swing.JFrame {
         jLabel10.setBounds(410, 220, 50, 30);
 
         try {
-            jFormattedTextField4.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+            Jtf_nascimento.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
-        getContentPane().add(jFormattedTextField4);
-        jFormattedTextField4.setBounds(620, 270, 210, 30);
-        getContentPane().add(jTextField4);
-        jTextField4.setBounds(130, 330, 450, 30);
+        getContentPane().add(Jtf_nascimento);
+        Jtf_nascimento.setBounds(620, 270, 210, 30);
+        getContentPane().add(jtf_rua);
+        jtf_rua.setBounds(130, 330, 450, 30);
 
         jLabel11.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel11.setText("DATA DE NASCIMENTO");
@@ -171,8 +179,8 @@ public class CadastrarCliente extends javax.swing.JFrame {
         jLabel11.setBounds(400, 270, 230, 30);
         getContentPane().add(jTextField5);
         jTextField5.setBounds(650, 330, 180, 30);
-        getContentPane().add(jTextField6);
-        jTextField6.setBounds(130, 380, 440, 30);
+        getContentPane().add(jtf_bairro);
+        jtf_bairro.setBounds(130, 380, 440, 30);
 
         jLabel12.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel12.setText("Nº");
@@ -180,14 +188,14 @@ public class CadastrarCliente extends javax.swing.JFrame {
         jLabel12.setBounds(610, 330, 40, 30);
 
         try {
-            jFormattedTextField5.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("#####-###")));
+            jtf_cep.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("#####-###")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
-        getContentPane().add(jFormattedTextField5);
-        jFormattedTextField5.setBounds(650, 380, 180, 30);
-        getContentPane().add(jTextField7);
-        jTextField7.setBounds(130, 430, 650, 30);
+        getContentPane().add(jtf_cep);
+        jtf_cep.setBounds(650, 380, 180, 30);
+        getContentPane().add(jtf_email);
+        jtf_email.setBounds(130, 430, 650, 30);
 
         jPanel2.setBackground(new java.awt.Color(204, 204, 204));
 
@@ -249,7 +257,55 @@ public class CadastrarCliente extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        
+          String nome  = Jtf_nome.getText();
+          String nascimento = Jtf_nascimento.getText();
+          String cep = jtf_cep.getText();
+          String rua = jtf_rua.getText();
+          String numero = jtf_numero.getText();
+          String bairro = jtf_bairro.getText(); 
+          String email = jtf_email.getText();
+          String fone = jtf_telefone.getText();
+          String cpf = jtf_cpf.getText();
+          String rg = jtf_rg.getText();
+          if (nome.equals("") ||  nascimento.equals("") || cep.equals("") || rua.equals("") || bairro.equals("") || fone.equals("") || cpf.equals("") || rg.equals("")){
+              JOptionPane.showMessageDialog(null, "nenhum campo pode estar vazio", "video locadora", JOptionPane.WARNING_MESSAGE);
+          }else{
+              Connection con = Conexao.AbrirConexao();
+              ClienteDAO sql = new ClienteDAO(con);
+              int n = Integer.parseInt(numero);
+              Cliente a = new Cliente();
+              
+              a.setNome(nome);
+              a.setNascimento(nascimento);
+              a.setCEP(cep);
+              a.setRua(rua);
+              a.setNumero(n);
+              a.setBairro(bairro);
+              a.setEmail(email);
+              a.setTelefone(fone);
+              a.setCPF(cpf);
+              a.setRG(rg);
+              
+              sql.Inserir_Cliente(a);
+              Conexao.FecharConexao(con);
+              Jtf_nome.setText("");
+              jtf_cep.setText("");
+              jtf_numero.setText("");
+              jtf_bairro.setText("");
+              jtf_email.setText("");
+              jtf_telefone.setText("");
+              jtf_rua.setText("");
+              Jtf_nascimento.setText("");
+              jtf_rg.setText("");
+              jtf_cpf.setText("");
+              JOptionPane.showMessageDialog(null, "cadastro realizado com sucesso", "video locadora", JOptionPane.INFORMATION_MESSAGE);
+              dispose();
+           
+              
+              
+              
+          }
+          
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
@@ -288,14 +344,12 @@ public class CadastrarCliente extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JFormattedTextField Jtf_nascimento;
+    private javax.swing.JTextField Jtf_nome;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JFormattedTextField jFormattedTextField1;
-    private javax.swing.JFormattedTextField jFormattedTextField2;
-    private javax.swing.JFormattedTextField jFormattedTextField3;
-    private javax.swing.JFormattedTextField jFormattedTextField4;
-    private javax.swing.JFormattedTextField jFormattedTextField5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -311,12 +365,14 @@ public class CadastrarCliente extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
+    private javax.swing.JTextField jtf_bairro;
+    private javax.swing.JFormattedTextField jtf_cep;
+    private javax.swing.JFormattedTextField jtf_cpf;
+    private javax.swing.JTextField jtf_email;
+    private javax.swing.JTextField jtf_numero;
+    private javax.swing.JTextField jtf_rg;
+    private javax.swing.JTextField jtf_rua;
+    private javax.swing.JFormattedTextField jtf_telefone;
     // End of variables declaration//GEN-END:variables
 }

@@ -5,7 +5,12 @@
  */
 package Visao.Alterar;
 
+import DAO.ClienteDAO;
+import DAO.Conexao;
+import Modelo.Cliente;
 import Visao.Cadastrar.*;
+import java.sql.Connection;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -30,37 +35,52 @@ public class AlterarCliente extends javax.swing.JFrame {
     private void initComponents() {
 
         jFormattedTextField1 = new javax.swing.JFormattedTextField();
+        jPanel4 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jLabel9 = new javax.swing.JLabel();
-        jFormattedTextField2 = new javax.swing.JFormattedTextField();
-        jFormattedTextField3 = new javax.swing.JFormattedTextField();
-        jLabel10 = new javax.swing.JLabel();
-        jFormattedTextField4 = new javax.swing.JFormattedTextField();
-        jTextField4 = new javax.swing.JTextField();
-        jLabel11 = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
-        jTextField6 = new javax.swing.JTextField();
-        jLabel12 = new javax.swing.JLabel();
-        jFormattedTextField5 = new javax.swing.JFormattedTextField();
-        jTextField7 = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        alterar = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        jtf_email = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
+        jtf_bairro = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jtf_rua = new javax.swing.JTextField();
+        jtf_telefone = new javax.swing.JFormattedTextField();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jtf_rg = new javax.swing.JTextField();
+        jLabel10 = new javax.swing.JLabel();
+        jtf_nome = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        jtf_numero = new javax.swing.JTextField();
+        jtf_codigo = new javax.swing.JTextField();
+        btaltera = new javax.swing.JButton();
+        jFormattedTextField2 = new javax.swing.JFormattedTextField();
+        jLabel11 = new javax.swing.JLabel();
+        jtf_nascimento = new javax.swing.JFormattedTextField();
+        jTextField5 = new javax.swing.JTextField();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jtf_cep = new javax.swing.JFormattedTextField();
 
         jFormattedTextField1.setText("jFormattedTextField1");
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(null);
@@ -74,128 +94,31 @@ public class AlterarCliente extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(196, 196, 196)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(256, Short.MAX_VALUE)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 345, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(299, Short.MAX_VALUE))
+                .addGap(239, 239, 239))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel1);
         jPanel1.setBounds(0, 0, 840, 100);
 
-        jLabel2.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        jLabel2.setText("CEP");
-        getContentPane().add(jLabel2);
-        jLabel2.setBounds(600, 380, 40, 30);
-
-        jLabel3.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        jLabel3.setText("Nº do Cliente");
-        getContentPane().add(jLabel3);
-        jLabel3.setBounds(10, 130, 130, 30);
-
-        jLabel4.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        jLabel4.setText("Nome:");
-        getContentPane().add(jLabel4);
-        jLabel4.setBounds(40, 170, 80, 30);
-
-        jLabel5.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        jLabel5.setText("RG:");
-        getContentPane().add(jLabel5);
-        jLabel5.setBounds(60, 220, 50, 30);
-
-        jLabel6.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        jLabel6.setText("Rua");
-        getContentPane().add(jLabel6);
-        jLabel6.setBounds(40, 330, 70, 40);
-
-        jLabel7.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        jLabel7.setText("Telefone:");
-        getContentPane().add(jLabel7);
-        jLabel7.setBounds(30, 270, 90, 40);
-
-        jLabel8.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        jLabel8.setText("Bairro");
-        getContentPane().add(jLabel8);
-        jLabel8.setBounds(40, 380, 70, 30);
-        getContentPane().add(jTextField1);
-        jTextField1.setBounds(130, 130, 190, 30);
-        getContentPane().add(jTextField2);
-        jTextField2.setBounds(130, 170, 700, 30);
-        getContentPane().add(jTextField3);
-        jTextField3.setBounds(130, 220, 250, 30);
-
-        jLabel9.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        jLabel9.setText("Email");
-        getContentPane().add(jLabel9);
-        jLabel9.setBounds(30, 430, 60, 30);
-
-        try {
-            jFormattedTextField2.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        getContentPane().add(jFormattedTextField2);
-        jFormattedTextField2.setBounds(460, 220, 370, 30);
-
-        try {
-            jFormattedTextField3.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##)###-#####")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        getContentPane().add(jFormattedTextField3);
-        jFormattedTextField3.setBounds(130, 270, 250, 30);
-
-        jLabel10.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        jLabel10.setText("CPF:");
-        getContentPane().add(jLabel10);
-        jLabel10.setBounds(410, 220, 50, 30);
-
-        try {
-            jFormattedTextField4.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        getContentPane().add(jFormattedTextField4);
-        jFormattedTextField4.setBounds(620, 270, 210, 30);
-        getContentPane().add(jTextField4);
-        jTextField4.setBounds(130, 330, 450, 30);
-
-        jLabel11.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        jLabel11.setText("DATA DE NASCIMENTO");
-        getContentPane().add(jLabel11);
-        jLabel11.setBounds(400, 270, 230, 30);
-        getContentPane().add(jTextField5);
-        jTextField5.setBounds(650, 330, 180, 30);
-        getContentPane().add(jTextField6);
-        jTextField6.setBounds(130, 380, 440, 30);
-
-        jLabel12.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        jLabel12.setText("Nº");
-        getContentPane().add(jLabel12);
-        jLabel12.setBounds(610, 330, 40, 30);
-
-        try {
-            jFormattedTextField5.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("#####-###")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        getContentPane().add(jFormattedTextField5);
-        jFormattedTextField5.setBounds(650, 380, 180, 30);
-        getContentPane().add(jTextField7);
-        jTextField7.setBounds(130, 430, 650, 30);
-
         jPanel2.setBackground(new java.awt.Color(204, 204, 204));
 
         jButton1.setText("Cancelar");
 
-        jButton2.setText("Alterar");
+        alterar.setText("Alterar");
+        alterar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                alterarActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("Limpar");
 
@@ -207,7 +130,7 @@ public class AlterarCliente extends javax.swing.JFrame {
                 .addGap(83, 83, 83)
                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 109, Short.MAX_VALUE)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(alterar, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(159, 159, 159)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(111, 111, 111))
@@ -218,7 +141,7 @@ public class AlterarCliente extends javax.swing.JFrame {
                 .addContainerGap(29, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(alterar, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(24, 24, 24))
         );
@@ -227,23 +150,178 @@ public class AlterarCliente extends javax.swing.JFrame {
         jPanel2.setBounds(0, 490, 840, 100);
 
         jPanel3.setBackground(new java.awt.Color(153, 153, 153));
+        jPanel3.setLayout(null);
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 840, Short.MAX_VALUE)
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 390, Short.MAX_VALUE)
-        );
+        jLabel3.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        jLabel3.setText("Nº do Cliente");
+        jPanel3.add(jLabel3);
+        jLabel3.setBounds(20, 60, 130, 30);
+
+        jLabel14.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        jLabel14.setText("CODIGO:");
+        jPanel3.add(jLabel14);
+        jLabel14.setBounds(10, 20, 130, 30);
+        jPanel3.add(jtf_email);
+        jtf_email.setBounds(140, 320, 250, 30);
+
+        jLabel9.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        jLabel9.setText("Email");
+        jPanel3.add(jLabel9);
+        jLabel9.setBounds(30, 330, 60, 30);
+        jPanel3.add(jtf_bairro);
+        jtf_bairro.setBounds(140, 280, 250, 30);
+
+        jLabel8.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        jLabel8.setText("Bairro");
+        jPanel3.add(jLabel8);
+        jLabel8.setBounds(30, 290, 70, 30);
+
+        jLabel6.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        jLabel6.setText("Rua");
+        jPanel3.add(jLabel6);
+        jLabel6.setBounds(30, 240, 70, 40);
+        jPanel3.add(jtf_rua);
+        jtf_rua.setBounds(140, 240, 250, 30);
+
+        try {
+            jtf_telefone.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##)###-#####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        jPanel3.add(jtf_telefone);
+        jtf_telefone.setBounds(140, 200, 250, 30);
+
+        jLabel7.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        jLabel7.setText("Telefone:");
+        jPanel3.add(jLabel7);
+        jLabel7.setBounds(20, 190, 90, 40);
+
+        jLabel5.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        jLabel5.setText("RG:");
+        jPanel3.add(jLabel5);
+        jLabel5.setBounds(20, 150, 50, 30);
+        jPanel3.add(jtf_rg);
+        jtf_rg.setBounds(140, 150, 250, 30);
+
+        jLabel10.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        jLabel10.setText("CPF:");
+        jPanel3.add(jLabel10);
+        jLabel10.setBounds(400, 200, 50, 30);
+        jPanel3.add(jtf_nome);
+        jtf_nome.setBounds(140, 100, 380, 30);
+
+        jLabel4.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        jLabel4.setText("Nome:");
+        jPanel3.add(jLabel4);
+        jLabel4.setBounds(20, 110, 80, 30);
+        jPanel3.add(jtf_numero);
+        jtf_numero.setBounds(140, 60, 190, 30);
+        jPanel3.add(jtf_codigo);
+        jtf_codigo.setBounds(140, 20, 222, 32);
+
+        btaltera.setText("OK");
+        btaltera.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btalteraActionPerformed(evt);
+            }
+        });
+        jPanel3.add(btaltera);
+        btaltera.setBounds(380, 20, 49, 25);
+
+        try {
+            jFormattedTextField2.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        jPanel3.add(jFormattedTextField2);
+        jFormattedTextField2.setBounds(460, 200, 260, 30);
+
+        jLabel11.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        jLabel11.setText("DATA DE NASCIMENTO");
+        jPanel3.add(jLabel11);
+        jLabel11.setBounds(400, 160, 230, 30);
+
+        try {
+            jtf_nascimento.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        jPanel3.add(jtf_nascimento);
+        jtf_nascimento.setBounds(620, 160, 100, 30);
+        jPanel3.add(jTextField5);
+        jTextField5.setBounds(460, 240, 180, 30);
+
+        jLabel12.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        jLabel12.setText("Nº");
+        jPanel3.add(jLabel12);
+        jLabel12.setBounds(410, 240, 40, 30);
+
+        jLabel2.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        jLabel2.setText("CEP");
+        jPanel3.add(jLabel2);
+        jLabel2.setBounds(410, 280, 40, 30);
+
+        try {
+            jtf_cep.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("#####-###")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        jPanel3.add(jtf_cep);
+        jtf_cep.setBounds(460, 280, 180, 30);
 
         getContentPane().add(jPanel3);
         jPanel3.setBounds(0, 100, 840, 390);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btalteraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btalteraActionPerformed
+        
+    }//GEN-LAST:event_btalteraActionPerformed
+
+    private void alterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_alterarActionPerformed
+        String nome  = Jtf_nome.getText();
+          String nascimento = Jtf_nascimento.getText();
+          String cep = jtf_cep.getText();
+          String rua = jtf_rua.getText();
+          String numero = jtf_numero.getText();
+          String bairro = jtf_bairro.getText(); 
+          String email = jtf_email.getText();
+          String fone = jtf_telefone.getText();
+          String cpf = jtf_cpf.getText();
+          String rg = jtf_rg.getText();
+         else{
+              Connection con = Conexao.AbrirConexao();
+              ClienteDAO sql = new ClienteDAO(con);
+              int n = Integer.parseInt(numero);
+              Cliente a = new Cliente();
+              
+              a.setNome(nome);
+              a.setNascimento(nascimento);
+              a.setCEP(cep);
+              a.setRua(rua);
+              a.setNumero(n);
+              a.setBairro(bairro);
+              a.setEmail(email);
+              a.setTelefone(fone);
+              a.setCPF(cpf);
+              a.setRG(rg);
+              
+              sql.Inserir_Cliente(a);
+              Conexao.FecharConexao(con);
+              Jtf_nome.setText("");
+              jtf_cep.setText("");
+              jtf_numero.setText("");
+              jtf_bairro.setText("");
+              jtf_email.setText("");
+              jtf_telefone.setText("");
+              jtf_rua.setText("");
+              Jtf_nascimento.setText("");
+              jtf_rg.setText("");
+              jtf_cpf.setText("");
+              JOptionPane.showMessageDialog(null, "cadastro realizado com sucesso", "video locadora", JOptionPane.INFORMATION_MESSAGE);
+              dispose();
+    }//GEN-LAST:event_alterarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -282,18 +360,17 @@ public class AlterarCliente extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton alterar;
+    private javax.swing.JButton btaltera;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JFormattedTextField jFormattedTextField1;
     private javax.swing.JFormattedTextField jFormattedTextField2;
-    private javax.swing.JFormattedTextField jFormattedTextField3;
-    private javax.swing.JFormattedTextField jFormattedTextField4;
-    private javax.swing.JFormattedTextField jFormattedTextField5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -305,12 +382,17 @@ public class AlterarCliente extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
+    private javax.swing.JTextField jtf_bairro;
+    private javax.swing.JFormattedTextField jtf_cep;
+    private javax.swing.JTextField jtf_codigo;
+    private javax.swing.JTextField jtf_email;
+    private javax.swing.JFormattedTextField jtf_nascimento;
+    private javax.swing.JTextField jtf_nome;
+    private javax.swing.JTextField jtf_numero;
+    private javax.swing.JTextField jtf_rg;
+    private javax.swing.JTextField jtf_rua;
+    private javax.swing.JFormattedTextField jtf_telefone;
     // End of variables declaration//GEN-END:variables
 }

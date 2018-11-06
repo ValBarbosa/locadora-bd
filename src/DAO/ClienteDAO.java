@@ -6,10 +6,17 @@
 package DAO;
 
 import Modelo.Cliente;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
-public class ClienteDAO {
+public class ClienteDAO extends ExecuteSQL{
+    public ClienteDAO(Connection con){
+        super(con);
+    }
     public String Inserir_Cliente(Cliente a){
         String sql = "INSERT INTO cliente VALUES(0,?,?,?,?,?,?,?,?,?,?)";
         try {
@@ -36,9 +43,100 @@ public class ClienteDAO {
             return e.getMessage();
         }
     }
+         public List<Cliente> ListarCliente(){
+          String sql ="select idcliente,nome,rg,cpf,telefone,email from cliente";
+        List<Cliente> lista = new ArrayList<>();
+        try {
+            PreparedStatement ps = getCon().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            if (rs != null){
+                while(rs.next()){
+                    Cliente a = new Cliente();
+                    a.setCodigo(rs.getInt(1));
+                    a.setNome(rs.getString(2));
+                    a.setRG(rs.getString(3));
+                    a.setCPF(rs.getString(4));
+                    a.setTelefone(rs.getString(5));
+                    a.setEmail(rs.getString(6));
+                    
+                    lista.add(a);
+                    
+                }
+                return lista;
+            }else{
+                return null;
+            }
+            
+            
+        } catch (SQLException e) {
+            return null;
+        }
+        
 
-    private Object getCon() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
-    
+         
+         public List<Cliente> ListarComboCliente(){
+             String sql = "select nome from cliente order by nome";
+             List<Cliente> lista = new ArrayList<>();
+             try {
+                 PreparedStatement ps = getCon().prepareStatement(sql);
+                 ResultSet rs = ps.executeQuery();
+                 if(rs != null){
+                     while (rs.next()){
+                         Cliente a = new Cliente();
+                         a.setNome(rs.getString(1));
+                         lista.add(a);
+                     }
+                     return lista;
+                 }else{
+                     return null;
+                 }
+             } catch (Exception e) {
+                 return null;
+             }
+             
+         }
+         public List<Cliente> ConsultaCodigoCliente(String nome){
+             String sql = "select idcliente from cliente where nome = '"+ nome + "'";
+             List<Cliente> lista = new ArrayList<>();
+             try {
+                 PreparedStatement ps = getCon().prepareStatement(sql);
+                 ResultSet rs = ps.executeQuery();
+                 if(rs != null){
+                     while(rs.next()){
+                         Cliente a = new Cliente();
+                         a.setCodigo(rs.getInt(1));
+                         lista.add(a);
+                         
+                     }
+                     return lista;
+                 }else{
+                     return null;
+                 }
+                 
+             } catch (Exception e) {
+                 return null;
+             }
+         }
+         public String Excluir_Cliente(Cliente a){
+             String sql = "delete from cliente where idcliente = ? and nome = ?";
+             try {
+                 PreparedStatement ps = getCon().prepareStatement(sql);
+                 ps.setInt(1, a.getCodigo());
+                 ps.setString(2, a.getNome());
+                 if(ps.executeUpdate() > 0){
+                     return "excluido com sucesso";
+                 }else{
+                     return "erro ao excluir";
+                 }
+                 
+             } catch (SQLException e) {
+                 return e.getMessage();
+             }
+         }
 }
+
+
+    
+
