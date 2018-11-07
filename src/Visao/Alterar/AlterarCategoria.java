@@ -19,6 +19,7 @@ public class AlterarCategoria extends javax.swing.JFrame {
     public AlterarCategoria() {
         initComponents();
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.

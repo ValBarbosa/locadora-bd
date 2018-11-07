@@ -33,9 +33,9 @@ public class CadastrarClassificacao extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
+        jtf_nome = new javax.swing.JTextField();
+        jtf_codigo = new javax.swing.JTextField();
+        jtf_preco = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jButton2 = new javax.swing.JButton();
@@ -86,12 +86,12 @@ public class CadastrarClassificacao extends javax.swing.JFrame {
         jLabel4.setText("Preço:");
         getContentPane().add(jLabel4);
         jLabel4.setBounds(40, 240, 80, 22);
-        getContentPane().add(jTextField1);
-        jTextField1.setBounds(130, 180, 244, 34);
-        getContentPane().add(jTextField2);
-        jTextField2.setBounds(130, 130, 244, 31);
-        getContentPane().add(jTextField3);
-        jTextField3.setBounds(130, 230, 244, 31);
+        getContentPane().add(jtf_nome);
+        jtf_nome.setBounds(130, 180, 244, 34);
+        getContentPane().add(jtf_codigo);
+        jtf_codigo.setBounds(130, 130, 244, 31);
+        getContentPane().add(jtf_preco);
+        jtf_preco.setBounds(130, 230, 244, 31);
 
         jPanel2.setBackground(new java.awt.Color(153, 153, 153));
 
@@ -110,6 +110,11 @@ public class CadastrarClassificacao extends javax.swing.JFrame {
         jPanel2.setBounds(0, 100, 600, 210);
 
         jButton2.setText("Cadastrar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("Limpar");
 
@@ -144,6 +149,10 @@ public class CadastrarClassificacao extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+      
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -192,8 +201,8 @@ public class CadastrarClassificacao extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
+    private javax.swing.JTextField jtf_codigo;
+    private javax.swing.JTextField jtf_nome;
+    private javax.swing.JTextField jtf_preco;
     // End of variables declaration//GEN-END:variables
 }

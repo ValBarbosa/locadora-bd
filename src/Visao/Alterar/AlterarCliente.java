@@ -61,7 +61,7 @@ public class AlterarCliente extends javax.swing.JFrame {
         jtf_numero = new javax.swing.JTextField();
         jtf_codigo = new javax.swing.JTextField();
         btaltera = new javax.swing.JButton();
-        jFormattedTextField2 = new javax.swing.JFormattedTextField();
+        jtf_cpf = new javax.swing.JFormattedTextField();
         jLabel11 = new javax.swing.JLabel();
         jtf_nascimento = new javax.swing.JFormattedTextField();
         jTextField5 = new javax.swing.JTextField();
@@ -229,12 +229,12 @@ public class AlterarCliente extends javax.swing.JFrame {
         btaltera.setBounds(380, 20, 49, 25);
 
         try {
-            jFormattedTextField2.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
+            jtf_cpf.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
-        jPanel3.add(jFormattedTextField2);
-        jFormattedTextField2.setBounds(460, 200, 260, 30);
+        jPanel3.add(jtf_cpf);
+        jtf_cpf.setBounds(460, 200, 260, 30);
 
         jLabel11.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel11.setText("DATA DE NASCIMENTO");
@@ -280,8 +280,8 @@ public class AlterarCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_btalteraActionPerformed
 
     private void alterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_alterarActionPerformed
-        String nome  = Jtf_nome.getText();
-          String nascimento = Jtf_nascimento.getText();
+          String nome  = jtf_nome.getText();
+          String nascimento = jtf_nascimento.getText();
           String cep = jtf_cep.getText();
           String rua = jtf_rua.getText();
           String numero = jtf_numero.getText();
@@ -290,7 +290,11 @@ public class AlterarCliente extends javax.swing.JFrame {
           String fone = jtf_telefone.getText();
           String cpf = jtf_cpf.getText();
           String rg = jtf_rg.getText();
-         else{
+          if(nome.equals("")){
+              JOptionPane.showMessageDialog(null, "nenhum campo pode estar vazio", "video locadora", JOptionPane.WARNING_MESSAGE);
+              
+          }
+          else{
               Connection con = Conexao.AbrirConexao();
               ClienteDAO sql = new ClienteDAO(con);
               int n = Integer.parseInt(numero);
@@ -307,20 +311,21 @@ public class AlterarCliente extends javax.swing.JFrame {
               a.setCPF(cpf);
               a.setRG(rg);
               
-              sql.Inserir_Cliente(a);
+              //sql.Alterar_Cliente(a);
               Conexao.FecharConexao(con);
-              Jtf_nome.setText("");
+              jtf_nome.setText("");
               jtf_cep.setText("");
               jtf_numero.setText("");
               jtf_bairro.setText("");
               jtf_email.setText("");
               jtf_telefone.setText("");
               jtf_rua.setText("");
-              Jtf_nascimento.setText("");
+              jtf_nascimento.setText("");
               jtf_rg.setText("");
               jtf_cpf.setText("");
               JOptionPane.showMessageDialog(null, "cadastro realizado com sucesso", "video locadora", JOptionPane.INFORMATION_MESSAGE);
               dispose();
+                 }
     }//GEN-LAST:event_alterarActionPerformed
 
     /**
@@ -365,7 +370,6 @@ public class AlterarCliente extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
     private javax.swing.JFormattedTextField jFormattedTextField1;
-    private javax.swing.JFormattedTextField jFormattedTextField2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -387,6 +391,7 @@ public class AlterarCliente extends javax.swing.JFrame {
     private javax.swing.JTextField jtf_bairro;
     private javax.swing.JFormattedTextField jtf_cep;
     private javax.swing.JTextField jtf_codigo;
+    private javax.swing.JFormattedTextField jtf_cpf;
     private javax.swing.JTextField jtf_email;
     private javax.swing.JFormattedTextField jtf_nascimento;
     private javax.swing.JTextField jtf_nome;

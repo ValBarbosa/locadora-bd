@@ -55,6 +55,7 @@ public class DVD {
     public void setData_compra(String data_compra) {
         this.data_compra = data_compra;
     }
-    
+
+  
     
 }
