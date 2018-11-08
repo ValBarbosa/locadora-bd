@@ -257,37 +257,45 @@ public class CadastrarCliente extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+          
+            
           String nome  = Jtf_nome.getText();
           String nascimento = Jtf_nascimento.getText();
           String cep = jtf_cep.getText();
           String rua = jtf_rua.getText();
-          String numero = jtf_numero.getText();
+          String numero = jTextField5.getText();
           String bairro = jtf_bairro.getText(); 
           String email = jtf_email.getText();
           String fone = jtf_telefone.getText();
           String cpf = jtf_cpf.getText();
           String rg = jtf_rg.getText();
+          
           if (nome.equals("") ||  nascimento.equals("") || cep.equals("") || rua.equals("") || bairro.equals("") || fone.equals("") || cpf.equals("") || rg.equals("")){
+          
               JOptionPane.showMessageDialog(null, "nenhum campo pode estar vazio", "video locadora", JOptionPane.WARNING_MESSAGE);
+          
           }else{
+              
               Connection con = Conexao.AbrirConexao();
               ClienteDAO sql = new ClienteDAO(con);
+              
               int n = Integer.parseInt(numero);
               Cliente a = new Cliente();
               
               a.setNome(nome);
               a.setNascimento(nascimento);
-              a.setCEP(cep);
-              a.setRua(rua);
-              a.setNumero(n);
-              a.setBairro(bairro);
+              a.setRG(rg);
+              a.setCPF(cpf);
               a.setEmail(email);
               a.setTelefone(fone);
-              a.setCPF(cpf);
-              a.setRG(rg);
+              a.setBairro(bairro);
+              a.setRua(rua);
+              a.setNumero(n);
+              a.setCEP(cep);
               
               sql.Inserir_Cliente(a);
               Conexao.FecharConexao(con);
+              
               Jtf_nome.setText("");
               jtf_cep.setText("");
               jtf_numero.setText("");
@@ -298,10 +306,9 @@ public class CadastrarCliente extends javax.swing.JFrame {
               Jtf_nascimento.setText("");
               jtf_rg.setText("");
               jtf_cpf.setText("");
+              
               JOptionPane.showMessageDialog(null, "cadastro realizado com sucesso", "video locadora", JOptionPane.INFORMATION_MESSAGE);
               dispose();
-           
-              
               
               
           }

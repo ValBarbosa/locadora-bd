@@ -5,6 +5,14 @@
  */
 package Visao.Consultar;
 
+import DAO.ClienteDAO;
+import DAO.Conexao;
+import Modelo.Cliente;
+import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Valéria
@@ -16,6 +24,82 @@ public class ConsultarCliente extends javax.swing.JFrame {
      */
     public ConsultarCliente() {
         initComponents();
+        AtualizaTable();
+    }
+    private void AtualizaTable(){
+        Connection con = Conexao.AbrirConexao();
+        ClienteDAO bd = new ClienteDAO(con);
+        List<Cliente> lista = new ArrayList<>();
+        lista = bd.ListarCliente();
+        DefaultTableModel tbm = (DefaultTableModel) jtable.getModel();
+        while(tbm.getRowCount() > 0){
+            tbm.removeRow(0);
+        }
+        int i = 0;
+        for (Cliente tab : lista){
+            tbm.addRow(new String[i]);
+            jtable.setValueAt(tab.getCodigo(), i, 0);
+            jtable.setValueAt(tab.getNome(), i, 1);
+            jtable.setValueAt(tab.getRG(), i, 2);
+            jtable.setValueAt(tab.getCPF(), i, 3);
+            jtable.setValueAt(tab.getTelefone(), i, 4);
+            jtable.setValueAt(tab.getEmail(), i, 5);
+            i++;
+
+
+        }
+        Conexao.FecharConexao(con);
+        
+    }
+    private void Consultar_Cod_Cliente(){
+        Connection con = Conexao.AbrirConexao();
+        ClienteDAO bd = new ClienteDAO(con);
+        List<Cliente> lista = new ArrayList<>();
+        lista = bd.Pesquisar_Cod_Cliente(Integer.parseInt(cod.getText()));
+        DefaultTableModel tbm = (DefaultTableModel) jtable.getModel();
+        while(tbm.getRowCount() > 0){
+            tbm.removeRow(0);
+        }
+        int i = 0;
+        for (Cliente tab : lista){
+            tbm.addRow(new String[i]);
+            jtable.setValueAt(tab.getCodigo(), i, 0);
+            jtable.setValueAt(tab.getNome(), i, 1);
+            jtable.setValueAt(tab.getRG(), i, 2);
+            jtable.setValueAt(tab.getCPF(), i, 3);
+            jtable.setValueAt(tab.getTelefone(), i, 4);
+            jtable.setValueAt(tab.getEmail(), i, 5);
+            i++;
+
+
+        }
+        Conexao.FecharConexao(con);
+        
+    }
+    private void Consultar_Nome_Cliente(){
+        Connection con = Conexao.AbrirConexao();
+        ClienteDAO bd = new ClienteDAO(con);
+        List<Cliente> lista = new ArrayList<>();
+        lista = bd.Pesquisar_Nome_Cliente(nome.getText());
+        DefaultTableModel tbm = (DefaultTableModel) jtable.getModel();
+        while(tbm.getRowCount() > 0){
+            tbm.removeRow(0);
+        }
+        int i = 0;
+        for (Cliente tab : lista){
+            tbm.addRow(new String[i]);
+            jtable.setValueAt(tab.getCodigo(), i, 0);
+            jtable.setValueAt(tab.getNome(), i, 1);
+            jtable.setValueAt(tab.getRG(), i, 2);
+            jtable.setValueAt(tab.getCPF(), i, 3);
+            jtable.setValueAt(tab.getTelefone(), i, 4);
+            jtable.setValueAt(tab.getEmail(), i, 5);
+            i++;
+
+
+        }
+        Conexao.FecharConexao(con);
+        
     }
 
     /**
@@ -30,15 +114,15 @@ public class ConsultarCliente extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jButton7 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
-        jTextField1 = new javax.swing.JTextField();
+        nome = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        cod = new javax.swing.JTextField();
+        pesquisarnome = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jtable = new javax.swing.JTable();
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -57,8 +141,8 @@ public class ConsultarCliente extends javax.swing.JFrame {
         getContentPane().setLayout(null);
 
         jPanel1.setLayout(null);
-        jPanel1.add(jTextField1);
-        jTextField1.setBounds(150, 30, 210, 30);
+        jPanel1.add(nome);
+        nome.setBounds(150, 30, 210, 30);
 
         jLabel1.setText("Pesquisa por código:");
         jPanel1.add(jLabel1);
@@ -67,25 +151,40 @@ public class ConsultarCliente extends javax.swing.JFrame {
         jLabel2.setText("Pesquisa por nome:");
         jPanel1.add(jLabel2);
         jLabel2.setBounds(20, 20, 160, 50);
-        jPanel1.add(jTextField2);
-        jTextField2.setBounds(640, 30, 96, 32);
+        jPanel1.add(cod);
+        cod.setBounds(640, 30, 96, 32);
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/pesquisar.jpg"))); // NOI18N
-        jPanel1.add(jButton1);
-        jButton1.setBounds(370, 30, 40, 29);
+        pesquisarnome.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/pesquisar.jpg"))); // NOI18N
+        pesquisarnome.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pesquisarnomeActionPerformed(evt);
+            }
+        });
+        jPanel1.add(pesquisarnome);
+        pesquisarnome.setBounds(370, 30, 40, 29);
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/pesquisar.jpg"))); // NOI18N
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
         jPanel1.add(jButton2);
         jButton2.setBounds(750, 30, 40, 30);
 
         jButton3.setText("TODOS");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
         jPanel1.add(jButton3);
         jButton3.setBounds(890, 20, 100, 40);
 
         getContentPane().add(jPanel1);
         jPanel1.setBounds(0, 0, 1010, 90);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jtable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -101,13 +200,26 @@ public class ConsultarCliente extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(jtable);
 
         getContentPane().add(jScrollPane1);
         jScrollPane1.setBounds(20, 110, 960, 402);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+
+        
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+  AtualizaTable();    
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void pesquisarnomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pesquisarnomeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_pesquisarnomeActionPerformed
 
     /**
      * @param args the command line arguments
@@ -145,7 +257,7 @@ public class ConsultarCliente extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JTextField cod;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton7;
@@ -154,8 +266,8 @@ public class ConsultarCliente extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTable jtable;
+    private javax.swing.JTextField nome;
+    private javax.swing.JButton pesquisarnome;
     // End of variables declaration//GEN-END:variables
 }
