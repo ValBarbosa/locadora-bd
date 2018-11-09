@@ -5,18 +5,46 @@
  */
 package Visao.Excluir;
 
-/**
- *
- * @author Valéria
- */
+import DAO.CategoriaDAO;
+import DAO.ClienteDAO;
+import DAO.Conexao;
+import DAO.FuncionarioDAO;
+import Modelo.Categoria;
+import Modelo.Cliente;
+import Modelo.Funcionario;
+import Principal.Menu;
+import Visao.Cadastrar.CadastrarCliente;
+import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
+import jdk.nashorn.internal.scripts.JO;
+
+
 public class ExcluirFuncionario extends javax.swing.JFrame {
 
-    /**
-     * Creates new form ExcluirFuncionario
-     */
     public ExcluirFuncionario() {
         initComponents();
+        AtualizaCombo();
+        
     }
+
+    
+private void AtualizaCombo(){
+    Connection con = Conexao.AbrirConexao();
+   FuncionarioDAO sql = new FuncionarioDAO(con);
+    
+    List<Funcionario> lista = new ArrayList<>();
+    lista = sql.ListarComboFuncionario();
+    jComboBox1.addItem("");
+    
+    for( Funcionario b : lista){
+    jComboBox1.addItem(b.getNome());
+    
+    }
+    Conexao.FecharConexao(con);
+
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -29,12 +57,12 @@ public class ExcluirFuncionario extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jTextField1 = new javax.swing.JTextField();
         jComboBox1 = new javax.swing.JComboBox<>();
-        jTextField2 = new javax.swing.JTextField();
+        campo = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
 
@@ -66,13 +94,23 @@ public class ExcluirFuncionario extends javax.swing.JFrame {
         getContentPane().add(jPanel1);
         jPanel1.setBounds(0, 0, 563, 100);
 
-        jButton1.setText("DELETAR");
-        getContentPane().add(jButton1);
-        jButton1.setBounds(320, 260, 130, 40);
-
-        jButton2.setText("OK");
+        jButton2.setText("DELETAR");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButton2);
-        jButton2.setBounds(90, 260, 130, 40);
+        jButton2.setBounds(320, 260, 130, 40);
+
+        jButton1.setText("CANCELAR");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton1);
+        jButton1.setBounds(90, 260, 130, 40);
 
         jPanel2.setBackground(new java.awt.Color(153, 153, 153));
         jPanel2.setLayout(null);
@@ -86,8 +124,8 @@ public class ExcluirFuncionario extends javax.swing.JFrame {
         });
         jPanel2.add(jComboBox1);
         jComboBox1.setBounds(270, 50, 251, 32);
-        jPanel2.add(jTextField2);
-        jTextField2.setBounds(150, 50, 100, 30);
+        jPanel2.add(campo);
+        campo.setBounds(150, 50, 100, 30);
 
         jLabel2.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel2.setText("NOME:");
@@ -99,7 +137,7 @@ public class ExcluirFuncionario extends javax.swing.JFrame {
 
         jPanel3.setLayout(null);
         getContentPane().add(jPanel3);
-        jPanel3.setBounds(0, 230, 560, 100);
+        jPanel3.setBounds(0, 230, 560, 0);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -107,6 +145,34 @@ public class ExcluirFuncionario extends javax.swing.JFrame {
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        String codigo = campo.getText();
+        String nome = jComboBox1.getSelectedItem().toString();
+        Connection con = Conexao.AbrirConexao();
+        FuncionarioDAO sql = new FuncionarioDAO(con);
+        Funcionario a = new Funcionario();
+        if(nome.equals("")){
+            JOptionPane.showMessageDialog(null,"Nenhum Nome Selecionado","Video Locadora",JOptionPane.WARNING_MESSAGE);
+
+        }else{
+            int b = JOptionPane.showConfirmDialog(null,"Deseja realmente Excluir" + "\n ("+codigo+")(" +nome+")","Video Locadora",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
+            if( b==0){
+                int cod = Integer.parseInt(codigo);
+                a.setNome(nome);
+                a.setCod(cod);
+                sql.Excluir_Funcionario(a);
+                Conexao.FecharConexao(con);
+                new Menu().setVisible(true);
+                dispose();
+            }
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+       new Menu().setVisible(true);
+        dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -144,6 +210,7 @@ public class ExcluirFuncionario extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField campo;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JComboBox<String> jComboBox1;
@@ -153,6 +220,5 @@ public class ExcluirFuncionario extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
     // End of variables declaration//GEN-END:variables
 }

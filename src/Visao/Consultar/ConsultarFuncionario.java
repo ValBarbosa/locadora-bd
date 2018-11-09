@@ -4,18 +4,51 @@
  * and open the template in the editor.
  */
 package Visao.Consultar;
+import DAO.CategoriaDAO;
+import DAO.ClienteDAO;
+import DAO.Conexao;
+import DAO.FuncionarioDAO;
+import Modelo.Categoria;
+import Modelo.Cliente;
+import Modelo.Funcionario;
+import Principal.Menu;
+import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author Valéria
- */
+
 public class ConsultarFuncionario extends javax.swing.JFrame {
 
-    /**
-     * Creates new form ConsultarCliente
-     */
     public ConsultarFuncionario() {
         initComponents();
+        AtualizaTable();
+        setResizable(false);
+        setLocationRelativeTo(this);
+    }
+  private  void AtualizaTable(){
+    Connection con = Conexao.AbrirConexao();
+    FuncionarioDAO bd = new FuncionarioDAO(con);
+     
+        List<Funcionario> lista = new ArrayList<>();
+        lista = bd.ListarFuncionario();
+        DefaultTableModel tbm = (DefaultTableModel) tabela.getModel();
+        
+    
+    while(tbm.getRowCount() > 0){
+    tbm.removeRow(0);
+    }
+    int i = 0;
+    for(Funcionario tab : lista){
+    tbm.addRow(new String[i]);
+   tabela.setValueAt(tab.getCod(), i,0);
+    tabela.setValueAt(tab.getNome(),i,1);
+    tabela.setValueAt(tab.getLogin(),i,2);
+   
+    i++;
+    }
+    Conexao.FecharConexao(con);
     }
 
     /**
@@ -39,7 +72,7 @@ public class ConsultarFuncionario extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tabela = new javax.swing.JTable();
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -72,25 +105,45 @@ public class ConsultarFuncionario extends javax.swing.JFrame {
         jTextField2.setBounds(640, 30, 96, 32);
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/pesquisar.jpg"))); // NOI18N
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
         jPanel1.add(jButton1);
         jButton1.setBounds(370, 30, 40, 29);
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/pesquisar.jpg"))); // NOI18N
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
         jPanel1.add(jButton2);
         jButton2.setBounds(750, 30, 40, 30);
 
         jButton3.setText("TODOS");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
         jPanel1.add(jButton3);
         jButton3.setBounds(840, 20, 100, 30);
 
         jButton4.setText("VOLTAR");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
         jPanel1.add(jButton4);
         jButton4.setBounds(840, 70, 100, 30);
 
         getContentPane().add(jPanel1);
         jPanel1.setBounds(0, 0, 1010, 110);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tabela.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -106,13 +159,69 @@ public class ConsultarFuncionario extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tabela);
 
         getContentPane().add(jScrollPane1);
         jScrollPane1.setBounds(30, 140, 960, 350);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+         Connection con = Conexao.AbrirConexao();
+        FuncionarioDAO bd = new FuncionarioDAO(con);
+        List<Funcionario> lista = new ArrayList<>();
+        String nome = jTextField1.getText();
+        lista = bd.Pesquisar_Nome_Funcionario(nome);
+        DefaultTableModel tbm = (DefaultTableModel) tabela.getModel();
+
+        while(tbm.getRowCount() > 0){
+            tbm.removeRow(0);
+        }
+        int i = 0;
+        for(Funcionario tab : lista){
+            tbm.addRow(new String[i]);
+            tabela.setValueAt(tab.getCod(), i,0);
+            tabela.setValueAt(tab.getNome(),i,1);
+            tabela.setValueAt(tab.getLogin(),i,2);
+            i++;
+        }
+        Conexao.FecharConexao(con);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+       String cod = jTextField2.getText();
+
+        Connection con = Conexao.AbrirConexao();
+        FuncionarioDAO bd = new FuncionarioDAO(con);
+
+        List<Funcionario> lista = new ArrayList<>();
+        lista = bd.Pesquisar_Cod_Funcionario(cod);
+        DefaultTableModel tbm = (DefaultTableModel) tabela.getModel();
+
+        while(tbm.getRowCount() > 0){
+            tbm.removeRow(0);
+        }
+        int i = 0;
+        for(Funcionario tab : lista){
+            tbm.addRow(new String[i]);
+             tabela.setValueAt(tab.getCod(), i,0);
+            tabela.setValueAt(tab.getNome(),i,1);
+            tabela.setValueAt(tab.getLogin(),i,2);
+           
+            i++;
+        }
+        Conexao.FecharConexao(con);
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        AtualizaTable();
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+       new Menu().setVisible(true);
+        dispose();
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -163,8 +272,8 @@ public class ConsultarFuncionario extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
+    private javax.swing.JTable tabela;
     // End of variables declaration//GEN-END:variables
 }

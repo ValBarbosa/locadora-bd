@@ -8,37 +8,40 @@ package Visao.Excluir;
 import DAO.ClienteDAO;
 import DAO.Conexao;
 import Modelo.Cliente;
+import Principal.Menu;
+import Visao.Cadastrar.CadastrarCliente;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
+import jdk.nashorn.internal.scripts.JO;
 
-/**
- *
- * @author Valéria
- */
 public class ExcluirCliente extends javax.swing.JFrame {
 
-    /**
-     * Creates new form ExcluirFuncionario
-     */
     public ExcluirCliente() {
         initComponents();
+        setLocationRelativeTo(this);
+        setResizable(false);
+        setTitle("Excluir Cliente");
+        AtualizaCombo();
+    }
 
-        Atualizacombo();
+
+private void AtualizaCombo(){
+    Connection con = Conexao.AbrirConexao();
+    ClienteDAO sql = new ClienteDAO(con);
+    
+    List<Cliente> lista = new ArrayList<>();
+    lista = sql.ListarComboCliente();
+    jComboBox1.addItem("");
+    
+    for( Cliente b : lista){
+    jComboBox1.addItem(b.getNome());
+    
     }
-    private void  Atualizacombo(){
-        Connection con = Conexao.AbrirConexao();
-        ClienteDAO sql = new ClienteDAO(con);
-        List<Cliente> lista = new ArrayList<>();
-        lista = sql.ListarComboCliente();
-        jcb_nome.addItem("");
-        for(Cliente b : lista){
-            jcb_nome.addItem(b.getNome());
-        }
-        Conexao.FecharConexao(con);
-        
-    }
+    Conexao.FecharConexao(con);
+
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -51,12 +54,12 @@ public class ExcluirCliente extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        btexcluir = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jTextField1 = new javax.swing.JTextField();
-        jcb_nome = new javax.swing.JComboBox<>();
-        jtf_codigo = new javax.swing.JTextField();
+        jComboBox1 = new javax.swing.JComboBox<>();
+        campo = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
 
@@ -88,33 +91,38 @@ public class ExcluirCliente extends javax.swing.JFrame {
         getContentPane().add(jPanel1);
         jPanel1.setBounds(0, 0, 563, 100);
 
-        btexcluir.setText("DELETAR");
-        btexcluir.addActionListener(new java.awt.event.ActionListener() {
+        jButton2.setText("DELETAR");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btexcluirActionPerformed(evt);
+                jButton2ActionPerformed(evt);
             }
         });
-        getContentPane().add(btexcluir);
-        btexcluir.setBounds(320, 260, 130, 40);
-
-        jButton2.setText("OK");
         getContentPane().add(jButton2);
-        jButton2.setBounds(90, 260, 130, 40);
+        jButton2.setBounds(320, 260, 130, 40);
+
+        jButton1.setText("Cancelar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton1);
+        jButton1.setBounds(90, 260, 130, 40);
 
         jPanel2.setBackground(new java.awt.Color(153, 153, 153));
         jPanel2.setLayout(null);
         jPanel2.add(jTextField1);
         jTextField1.setBounds(144, 140, 78, 32);
 
-        jcb_nome.addActionListener(new java.awt.event.ActionListener() {
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jcb_nomeActionPerformed(evt);
+                jComboBox1ActionPerformed(evt);
             }
         });
-        jPanel2.add(jcb_nome);
-        jcb_nome.setBounds(270, 50, 251, 32);
-        jPanel2.add(jtf_codigo);
-        jtf_codigo.setBounds(150, 50, 100, 30);
+        jPanel2.add(jComboBox1);
+        jComboBox1.setBounds(270, 50, 251, 32);
+        jPanel2.add(campo);
+        campo.setBounds(150, 50, 100, 30);
 
         jLabel2.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel2.setText("NOME:");
@@ -131,25 +139,25 @@ public class ExcluirCliente extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jcb_nomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcb_nomeActionPerformed
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
       Connection con = Conexao.AbrirConexao();
       ClienteDAO sql = new ClienteDAO(con);
       List<Cliente> lista = new ArrayList<>();
-      String nome = jcb_nome.getSelectedItem().toString();
+      String nome = jComboBox1.getSelectedItem().toString();
       lista = sql.ConsultaCodigoCliente(nome);
       for (Cliente b : lista){
           int a = b.getCodigo();
-          jtf_codigo.setText("" + a);
+          campo.setText("" + a);
           
       }
       Conexao.FecharConexao(con);
       
       
-    }//GEN-LAST:event_jcb_nomeActionPerformed
+    }//GEN-LAST:event_jComboBox1ActionPerformed
 
-    private void btexcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btexcluirActionPerformed
-    String codigo = jtf_codigo.getText();
-    String nome = jcb_nome.getSelectedItem().toString();
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    String codigo = campo.getText();
+    String nome = jComboBox1.getSelectedItem().toString();
     Connection con = Conexao.AbrirConexao();
     ClienteDAO sql = new ClienteDAO(con);
     Cliente a = new Cliente();
@@ -167,7 +175,12 @@ public class ExcluirCliente extends javax.swing.JFrame {
     }
     
     
-    }//GEN-LAST:event_btexcluirActionPerformed
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+         new Menu().setVisible(true);
+         dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -208,15 +221,15 @@ public class ExcluirCliente extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btexcluir;
+    private javax.swing.JTextField campo;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JComboBox<String> jcb_nome;
-    private javax.swing.JTextField jtf_codigo;
     // End of variables declaration//GEN-END:variables
 }

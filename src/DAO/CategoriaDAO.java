@@ -245,7 +245,7 @@ if( rs!= null){
    
    
   
-   public List<Categoria> ProximoCategoria(){
+   public List<Categoria> IDCategoria(){
    String sql = "SELECT MAX(idcategoria) FROM `categoria`";
    List<Categoria> lista = new ArrayList<>();
    try{
