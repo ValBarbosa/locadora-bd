@@ -27,7 +27,7 @@ public class ConsultarCliente extends javax.swing.JFrame {
         initComponents();
         AtualizaTable();
         setLocationRelativeTo(this);
-        setResizable(false);
+        setResizable(true);
         setTitle("Consultar Clientes");
     }
     private void AtualizaTable(){

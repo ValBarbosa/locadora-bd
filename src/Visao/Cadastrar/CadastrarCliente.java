@@ -6,24 +6,46 @@
 package Visao.Cadastrar;
 
 import DAO.ClienteDAO;
+import java.sql.PreparedStatement;
 import DAO.Conexao;
 import Modelo.Cliente;
-import java.sql.Connection;
+import java.sql.*;
 import javax.swing.JOptionPane;
+import DAO.FuncionarioDAO;
+import DAO.Conexao;
+import Modelo.Funcionario;
+import Principal.Menu;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author Valéria
- */
+
 public class CadastrarCliente extends javax.swing.JFrame {
 
-    /**
-     * Creates new form CadastrarCliente
-     */
     public CadastrarCliente() {
         initComponents();
+         setSize(870,700);
+        setLocationRelativeTo(this);
+        setResizable(true);
+        setTitle("Cadastrar Cliente");
+        ProximoId();
     }
+   
+     private void ProximoId(){
+        Connection con = Conexao.AbrirConexao();
+        ClienteDAO sql  = new ClienteDAO(con);
+        List<Cliente> lista = new ArrayList<>();
+        lista = sql.ProximoCliente();
+        for(Cliente a : lista){
+        int codigo = a.getCodigo()+1;
+        id.setText(""+codigo);
+        }
+        Conexao.FecharConexao(con);
 
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -43,7 +65,7 @@ public class CadastrarCliente extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        jtf_numero = new javax.swing.JTextField();
+        id = new javax.swing.JTextField();
         Jtf_nome = new javax.swing.JTextField();
         jtf_rg = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
@@ -53,7 +75,7 @@ public class CadastrarCliente extends javax.swing.JFrame {
         Jtf_nascimento = new javax.swing.JFormattedTextField();
         jtf_rua = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
+        numeror = new javax.swing.JTextField();
         jtf_bairro = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
         jtf_cep = new javax.swing.JFormattedTextField();
@@ -129,9 +151,9 @@ public class CadastrarCliente extends javax.swing.JFrame {
         getContentPane().add(jLabel8);
         jLabel8.setBounds(40, 380, 70, 30);
 
-        jtf_numero.setEditable(false);
-        getContentPane().add(jtf_numero);
-        jtf_numero.setBounds(130, 130, 190, 30);
+        id.setEditable(false);
+        getContentPane().add(id);
+        id.setBounds(130, 130, 190, 30);
         getContentPane().add(Jtf_nome);
         Jtf_nome.setBounds(130, 170, 700, 30);
         getContentPane().add(jtf_rg);
@@ -177,8 +199,8 @@ public class CadastrarCliente extends javax.swing.JFrame {
         jLabel11.setText("DATA DE NASCIMENTO");
         getContentPane().add(jLabel11);
         jLabel11.setBounds(400, 270, 230, 30);
-        getContentPane().add(jTextField5);
-        jTextField5.setBounds(650, 330, 180, 30);
+        getContentPane().add(numeror);
+        numeror.setBounds(650, 330, 180, 30);
         getContentPane().add(jtf_bairro);
         jtf_bairro.setBounds(130, 380, 440, 30);
 
@@ -200,6 +222,11 @@ public class CadastrarCliente extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(204, 204, 204));
 
         jButton1.setText("Cancelar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Cadastrar");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -209,6 +236,11 @@ public class CadastrarCliente extends javax.swing.JFrame {
         });
 
         jButton3.setText("Limpar");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -263,7 +295,7 @@ public class CadastrarCliente extends javax.swing.JFrame {
           String nascimento = Jtf_nascimento.getText();
           String cep = jtf_cep.getText();
           String rua = jtf_rua.getText();
-          String numero = jTextField5.getText();
+          String numero = numeror.getText();
           String bairro = jtf_bairro.getText(); 
           String email = jtf_email.getText();
           String fone = jtf_telefone.getText();
@@ -298,7 +330,7 @@ public class CadastrarCliente extends javax.swing.JFrame {
               
               Jtf_nome.setText("");
               jtf_cep.setText("");
-              jtf_numero.setText("");
+              id.setText("");
               jtf_bairro.setText("");
               jtf_email.setText("");
               jtf_telefone.setText("");
@@ -306,14 +338,35 @@ public class CadastrarCliente extends javax.swing.JFrame {
               Jtf_nascimento.setText("");
               jtf_rg.setText("");
               jtf_cpf.setText("");
+              numeror.setText("");
+              
               
               JOptionPane.showMessageDialog(null, "cadastro realizado com sucesso", "video locadora", JOptionPane.INFORMATION_MESSAGE);
-              dispose();
-              
+             
+              new Menu().setVisible(true);
+ dispose();
               
           }
           
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+       this.Jtf_nome.setText("");
+ this.Jtf_nascimento.setText("");
+ this.jtf_cep.setText("");
+ this.jtf_rua.setText("");
+ this.numeror.setText("");
+ this.jtf_bairro.setText("");
+ this.jtf_email.setText("");
+ this.jtf_telefone.setText("");
+ this.jtf_cpf.setText("");
+ this.jtf_rg.setText("");
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+      new Menu().setVisible(true);
+        dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -353,6 +406,7 @@ public class CadastrarCliente extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JFormattedTextField Jtf_nascimento;
     private javax.swing.JTextField Jtf_nome;
+    private javax.swing.JTextField id;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
@@ -372,14 +426,13 @@ public class CadastrarCliente extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JTextField jTextField5;
     private javax.swing.JTextField jtf_bairro;
     private javax.swing.JFormattedTextField jtf_cep;
     private javax.swing.JFormattedTextField jtf_cpf;
     private javax.swing.JTextField jtf_email;
-    private javax.swing.JTextField jtf_numero;
     private javax.swing.JTextField jtf_rg;
     private javax.swing.JTextField jtf_rua;
     private javax.swing.JFormattedTextField jtf_telefone;
+    private javax.swing.JTextField numeror;
     // End of variables declaration//GEN-END:variables
 }

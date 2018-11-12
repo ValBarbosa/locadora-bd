@@ -9,15 +9,41 @@ package Visao.Cadastrar;
  *
  * @author Valéria
  */
+import DAO.CategoriaDAO;
+import DAO.ClassificacaoDAO;
+import DAO.Conexao;
+import Modelo.Categoria;
+import Modelo.Classificacao;
+import Principal.Menu;
+import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
+
 public class CadastrarClassificacao extends javax.swing.JFrame {
 
-    /**
-     * Creates new form CadastrarClassificacao
-     */
     public CadastrarClassificacao() {
         initComponents();
+        setResizable(true);
+         setResizable(false);
+        setSize(500,400);
+        setLocationRelativeTo(this);
+        ProximoId();
     }
 
+   
+     private void ProximoId(){
+        Connection con = Conexao.AbrirConexao();
+        ClassificacaoDAO sql  = new ClassificacaoDAO(con);
+        List<Classificacao> lista = new ArrayList<>();
+        lista = sql.IDClassificacao();
+        for(Classificacao a : lista){
+            int cod = a.getCodigo()+1;
+        jTextField1.setText(""+cod);
+        }
+        Conexao.FecharConexao(con);
+
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -33,9 +59,9 @@ public class CadastrarClassificacao extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jtf_nome = new javax.swing.JTextField();
-        jtf_codigo = new javax.swing.JTextField();
-        jtf_preco = new javax.swing.JTextField();
+        nome = new javax.swing.JTextField();
+        jTextField1 = new javax.swing.JTextField();
+        preco = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jButton2 = new javax.swing.JButton();
@@ -86,12 +112,14 @@ public class CadastrarClassificacao extends javax.swing.JFrame {
         jLabel4.setText("Preço:");
         getContentPane().add(jLabel4);
         jLabel4.setBounds(40, 240, 80, 22);
-        getContentPane().add(jtf_nome);
-        jtf_nome.setBounds(130, 180, 244, 34);
-        getContentPane().add(jtf_codigo);
-        jtf_codigo.setBounds(130, 130, 244, 31);
-        getContentPane().add(jtf_preco);
-        jtf_preco.setBounds(130, 230, 244, 31);
+        getContentPane().add(nome);
+        nome.setBounds(130, 180, 244, 34);
+
+        jTextField1.setEditable(false);
+        getContentPane().add(jTextField1);
+        jTextField1.setBounds(130, 130, 244, 31);
+        getContentPane().add(preco);
+        preco.setBounds(130, 230, 244, 31);
 
         jPanel2.setBackground(new java.awt.Color(153, 153, 153));
 
@@ -117,8 +145,18 @@ public class CadastrarClassificacao extends javax.swing.JFrame {
         });
 
         jButton3.setText("Limpar");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jButton4.setText("Cancelar");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -127,9 +165,9 @@ public class CadastrarClassificacao extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(47, 47, 47)
                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(46, 46, 46)
+                .addGap(42, 42, 42)
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(46, 46, 46)
+                .addGap(50, 50, 50)
                 .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(98, Short.MAX_VALUE))
         );
@@ -138,9 +176,9 @@ public class CadastrarClassificacao extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 54, Short.MAX_VALUE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, 54, Short.MAX_VALUE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 54, Short.MAX_VALUE))
+                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -151,8 +189,46 @@ public class CadastrarClassificacao extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-      
+      String nome  =  this.nome.getText();
+        String precoo  = this.preco.getText();
+        int preco  = Integer.parseInt(precoo);
+        
+        
+        if( nome.equals("") || precoo.equals("")){
+        JOptionPane.showMessageDialog(null, "Nenhum campo pode estar vazio" , "Video Locadora" , JOptionPane.WARNING_MESSAGE);
+
+        }else{
+         Connection con = Conexao.AbrirConexao();
+         ClassificacaoDAO sql = new ClassificacaoDAO(con);
+
+         Classificacao a  = new Classificacao();
+
+         a.setNome(nome);
+         a.setPreco(preco);
+
+         sql.Inserir_Classificacao(a);
+         Conexao.FecharConexao(con);
+
+         this.nome.setText("");
+         this.preco.setText("");
+
+         JOptionPane.showMessageDialog(null, "Cadastro Realizado com sucesso","Video Locadora",JOptionPane.INFORMATION_MESSAGE);
+          new Menu().setVisible(true);
+         dispose();
+        }      
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+     this.nome.setText("");
+ this.preco.setText("");
+
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+       new Menu().setVisible(true);
+ dispose();
+
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -201,8 +277,8 @@ public class CadastrarClassificacao extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JTextField jtf_codigo;
-    private javax.swing.JTextField jtf_nome;
-    private javax.swing.JTextField jtf_preco;
+    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField nome;
+    private javax.swing.JTextField preco;
     // End of variables declaration//GEN-END:variables
 }

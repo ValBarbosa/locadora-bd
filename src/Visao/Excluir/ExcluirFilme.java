@@ -5,19 +5,44 @@
  */
 package Visao.Excluir;
 
-/**
- *
- * @author Valéria
- */
-public class ExcluirFilme extends javax.swing.JFrame {
+import DAO.CategoriaDAO;
+import DAO.ClienteDAO;
+import DAO.Conexao;
+import DAO.FilmeDAO;
+import Modelo.Categoria;
+import Modelo.Cliente;
+import Modelo.Filme;
+import Principal.Menu;
+import Visao.Cadastrar.CadastrarCliente;
+import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
+import jdk.nashorn.internal.scripts.JO;
 
-    /**
-     * Creates new form ExcluirFuncionario
-     */
+
+public class ExcluirFilme extends javax.swing.JFrame {
     public ExcluirFilme() {
         initComponents();
+        AtualizaCombo();
     }
 
+    
+private void AtualizaCombo(){
+    Connection con = Conexao.AbrirConexao();
+    FilmeDAO sql = new FilmeDAO(con);
+    
+    List<Filme> lista = new ArrayList<>();
+    lista = sql.ListarComboFilme();
+    jComboBoxNome.addItem("");
+    
+    for( Filme b : lista){
+    jComboBoxNome.addItem(b.getTitulo());
+    
+    }
+    Conexao.FecharConexao(con);
+
+}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -29,12 +54,12 @@ public class ExcluirFilme extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jTextField1 = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jTextField2 = new javax.swing.JTextField();
+        jComboBoxNome = new javax.swing.JComboBox<>();
+        jl = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
 
@@ -64,30 +89,40 @@ public class ExcluirFilme extends javax.swing.JFrame {
         );
 
         getContentPane().add(jPanel1);
-        jPanel1.setBounds(0, 0, 563, 0);
+        jPanel1.setBounds(0, 0, 563, 100);
 
-        jButton1.setText("DELETAR");
-        getContentPane().add(jButton1);
-        jButton1.setBounds(320, 260, 130, 40);
-
-        jButton2.setText("OK");
+        jButton2.setText("DELETAR");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButton2);
-        jButton2.setBounds(90, 260, 130, 40);
+        jButton2.setBounds(320, 260, 130, 40);
+
+        jButton1.setText("Cancelar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton1);
+        jButton1.setBounds(90, 260, 130, 40);
 
         jPanel2.setBackground(new java.awt.Color(153, 153, 153));
         jPanel2.setLayout(null);
         jPanel2.add(jTextField1);
         jTextField1.setBounds(144, 140, 78, 32);
 
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+        jComboBoxNome.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
+                jComboBoxNomeActionPerformed(evt);
             }
         });
-        jPanel2.add(jComboBox1);
-        jComboBox1.setBounds(270, 50, 251, 32);
-        jPanel2.add(jTextField2);
-        jTextField2.setBounds(150, 50, 100, 30);
+        jPanel2.add(jComboBoxNome);
+        jComboBoxNome.setBounds(270, 50, 251, 32);
+        jPanel2.add(jl);
+        jl.setBounds(150, 50, 100, 30);
 
         jLabel2.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel2.setText("NOME:");
@@ -104,9 +139,47 @@ public class ExcluirFilme extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
+    private void jComboBoxNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxNomeActionPerformed
+       Connection con = Conexao.AbrirConexao();
+        FilmeDAO sql = new FilmeDAO(con);
+        List<Filme> lista = new ArrayList<>();
+        String nome = jComboBoxNome.getSelectedItem().toString();
+        lista =  sql.ConsultaCodigoFilme(nome);
+
+        for( Filme b : lista){
+            int a = b.getCodigo();
+            jl.setText(""+ a);
+        }
+        Conexao.FecharConexao(con);
+    }//GEN-LAST:event_jComboBoxNomeActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        String codigo = jl.getText();
+        String nome = jComboBoxNome.getSelectedItem().toString();
+        Connection con = Conexao.AbrirConexao();
+        FilmeDAO sql = new FilmeDAO(con);
+        Filme a = new Filme();
+        if(nome.equals("")){
+            JOptionPane.showMessageDialog(null,"Nenhum Nome Selecionado","Video Locadora",JOptionPane.WARNING_MESSAGE);
+
+        }else{
+            int b = JOptionPane.showConfirmDialog(null,"Deseja realmente Excluir" + "\n ("+codigo+")(" +nome+")","Video Locadora",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
+            if( b==0){
+                int cod = Integer.parseInt(codigo);
+                a.setTitulo(nome);
+                a.setCodigo(cod);
+                sql.Excluir_Filme(a);
+                Conexao.FecharConexao(con);
+                new Menu().setVisible(true);
+                dispose();
+            }
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+       new Menu().setVisible(true);
+        dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -149,13 +222,13 @@ public class ExcluirFilme extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<String> jComboBoxNome;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField jl;
     // End of variables declaration//GEN-END:variables
 }

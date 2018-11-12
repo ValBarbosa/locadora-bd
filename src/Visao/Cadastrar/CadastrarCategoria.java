@@ -9,15 +9,39 @@ package Visao.Cadastrar;
  *
  * @author Valéria
  */
+import DAO.CategoriaDAO;
+import DAO.ClienteDAO;
+import DAO.Conexao;
+import Modelo.Categoria;
+import Modelo.Cliente;
+import Principal.Menu;
+import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
+
 public class CadastrarCategoria extends javax.swing.JFrame {
 
-    /**
-     * Creates new form CadastrarCategoria
-     */
     public CadastrarCategoria() {
         initComponents();
+        setResizable(false);
+        setLocationRelativeTo(this);
+        IDCategoria();
     }
+    
+  
+     private void IDCategoria(){
+        Connection con = Conexao.AbrirConexao();
+        CategoriaDAO sql  = new CategoriaDAO(con);
+        List<Categoria> lista = new ArrayList<>();
+        lista = sql.IDCategoria();
+        for(Categoria a : lista){
+            int futcod = a.getCodigo()+1;
+        jTextField1.setText(""+futcod);
+        }
+        Conexao.FecharConexao(con);
 
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -36,7 +60,7 @@ public class CadastrarCategoria extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
+        nome = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
@@ -105,7 +129,7 @@ public class CadastrarCategoria extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 601, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(nome, javax.swing.GroupLayout.PREFERRED_SIZE, 601, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(30, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -117,7 +141,7 @@ public class CadastrarCategoria extends javax.swing.JFrame {
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(28, 28, 28)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(nome, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(79, Short.MAX_VALUE))
         );
@@ -145,10 +169,25 @@ public class CadastrarCategoria extends javax.swing.JFrame {
         );
 
         jButton4.setText("Limpar");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         jButton5.setText("Cadastrar");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
         jButton6.setText("Cancelar");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -194,6 +233,40 @@ public class CadastrarCategoria extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+      String nome  =  this.nome.getText();
+        
+                if( nome.equals("")){
+    JOptionPane.showMessageDialog(null, "Nenhum campo pode estar vazio" , "Video Locadora" , JOptionPane.WARNING_MESSAGE);
+
+        }else{
+         Connection con = Conexao.AbrirConexao();
+            CategoriaDAO sql = new CategoriaDAO(con);
+ 
+            Categoria a  = new Categoria();
+ 
+        a.setNome(nome);
+ 
+                        sql.Inserir_Categoria(a);
+                            Conexao.FecharConexao(con);
+ 
+                 this.nome.setText("");
+ 
+ JOptionPane.showMessageDialog(null, "Cadastro Realizado com sucesso","Video Locadora",JOptionPane.INFORMATION_MESSAGE);
+  new Menu().setVisible(true);
+ dispose();
+}
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+          new Menu().setVisible(true);
+ dispose();
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    this.nome.setText("");
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -246,6 +319,6 @@ public class CadastrarCategoria extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField nome;
     // End of variables declaration//GEN-END:variables
 }
