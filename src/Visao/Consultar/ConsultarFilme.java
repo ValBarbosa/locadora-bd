@@ -26,9 +26,8 @@ public class ConsultarFilme extends javax.swing.JFrame {
         initComponents();
         AtualizaTable();
         setResizable(false);
-         setResizable(false);
         setSize(1000,500);
-          setLocationRelativeTo(this);
+         setLocationRelativeTo(this);
       
     }
 

@@ -5,21 +5,92 @@
  */
 package Visao.Alterar;
 
-import Visao.Cadastrar.*;
-
 /**
  *
  * @author Valéria
  */
+import DAO.CategoriaDAO;
+import DAO.ClassificacaoDAO;
+import DAO.ClienteDAO;
+import DAO.Conexao;
+import DAO.FilmeDAO;
+import Modelo.Categoria;
+import Modelo.Classificacao;
+import Modelo.Cliente;
+import Modelo.Filme;
+import Principal.Menu;
+import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
+import Principal.Menu;
+import java.awt.Image;
+import java.io.File;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
 public class AlterarFilme extends javax.swing.JFrame {
 
-    /**
-     * Creates new form CadastrarFilme
-     */
     public AlterarFilme() {
         initComponents();
+        AtualizaComboCategoria();
+        AtualizaComboClassificacao();
+        setResizable(false);
+        setSize(840,500);
+         setLocationRelativeTo(this);
     }
-
+   
+    private void InserirDados(int cod){
+    String var = cod1.getText();
+    if(var.equals("")){
+    JOptionPane.showMessageDialog(null, "Campo vaziio");
+    }else{
+    Connection con = Conexao.AbrirConexao();
+    FilmeDAO sql  = new FilmeDAO(con);
+    List<Filme> lista = new ArrayList<>();
+    lista = sql.CapturarFilme(cod);
+    for(Filme a : lista){
+    cod1.setText(""+a.getCodigo());
+    jTextField2.setText(""+a.getTitulo());
+    jTextField6.setText(""+a.getCapa());
+    jFormattedTextField1.setText(""+a.getAno());
+    jFormattedTextField22.setText(""+a.getDuracao());
+    cate.setText(""+a.getCod_categoria());
+    jl.setText(""+a.getCod_classificacao());
+    
+    }
+    Conexao.FecharConexao(con);
+    }}
+    private void AtualizaComboCategoria(){
+    Connection con = Conexao.AbrirConexao();
+    CategoriaDAO sql = new CategoriaDAO(con);
+    
+    List<Categoria> lista = new ArrayList<>();
+    lista = sql.ListarComboCategoria();
+    jComboBox1.addItem("");
+    
+    for( Categoria b : lista){
+    jComboBox1.addItem(b.getNome());
+    
+    }
+    Conexao.FecharConexao(con);
+    }
+    private void AtualizaComboClassificacao(){
+    Connection con = Conexao.AbrirConexao();
+    ClassificacaoDAO sql = new ClassificacaoDAO(con);
+    
+    List<Classificacao> lista = new ArrayList<>();
+    lista = sql.ListarComboClassificacao();
+    jComboBox2.addItem("");
+    
+    for( Classificacao b : lista){
+    jComboBox2.addItem(b.getNome());
+    
+    }
+    Conexao.FecharConexao(con);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -29,32 +100,45 @@ public class AlterarFilme extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel7 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jTextField6 = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
+        cod1 = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
-        jTextField5 = new javax.swing.JTextField();
-        jTextField6 = new javax.swing.JTextField();
-        jPanel2 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        jTextField2 = new javax.swing.JTextField();
+        cate = new javax.swing.JTextField();
+        jTextField1 = new javax.swing.JTextField();
+        capa = new javax.swing.JTextField();
+        jl = new javax.swing.JTextField();
+        jFormattedTextField22 = new javax.swing.JFormattedTextField();
         jComboBox1 = new javax.swing.JComboBox<>();
         jComboBox2 = new javax.swing.JComboBox<>();
-        jButton4 = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+        jLabel12 = new javax.swing.JLabel();
+        jFormattedTextField1 = new javax.swing.JFormattedTextField();
         jButton5 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        jLabel7.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel7.setText("DURAÇÃO:");
+
+        jLabel10.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel10.setText("CATEGORIA:");
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -66,162 +150,316 @@ public class AlterarFilme extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(254, Short.MAX_VALUE)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 338, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(215, 215, 215))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(264, 264, 264)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(375, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 46, Short.MAX_VALUE)
+                .addGap(31, 31, 31))
         );
 
         getContentPane().add(jPanel1);
-        jPanel1.setBounds(0, 0, 807, 81);
-
-        jLabel2.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        jLabel2.setText("Título:");
-        getContentPane().add(jLabel2);
-        jLabel2.setBounds(20, 170, 86, 31);
-
-        jLabel3.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        jLabel3.setText("Classificação:");
-        getContentPane().add(jLabel3);
-        jLabel3.setBounds(10, 300, 130, 31);
-
-        jLabel4.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        jLabel4.setText("Código:");
-        getContentPane().add(jLabel4);
-        jLabel4.setBounds(10, 120, 86, 31);
-
-        jLabel6.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        jLabel6.setText("Ano:");
-        getContentPane().add(jLabel6);
-        jLabel6.setBounds(20, 220, 86, 31);
-
-        jLabel7.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        jLabel7.setText("Capa:");
-        getContentPane().add(jLabel7);
-        jLabel7.setBounds(20, 350, 80, 31);
-
-        jLabel8.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        jLabel8.setText("Categoria:");
-        getContentPane().add(jLabel8);
-        jLabel8.setBounds(20, 260, 110, 31);
-        getContentPane().add(jTextField1);
-        jTextField1.setBounds(90, 110, 160, 40);
-        getContentPane().add(jTextField2);
-        jTextField2.setBounds(90, 160, 300, 40);
-        getContentPane().add(jTextField3);
-        jTextField3.setBounds(90, 210, 190, 40);
-        getContentPane().add(jTextField4);
-        jTextField4.setBounds(150, 300, 70, 30);
-        getContentPane().add(jTextField5);
-        jTextField5.setBounds(150, 260, 70, 30);
-        getContentPane().add(jTextField6);
-        jTextField6.setBounds(100, 340, 300, 40);
+        jPanel1.setBounds(0, 0, 890, 90);
 
         jPanel2.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel2.setLayout(null);
 
-        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/DVD_VIDEO_logo.png"))); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel2.setText("TÍTULO");
+        jPanel2.add(jLabel2);
+        jLabel2.setBounds(12, 83, 72, 28);
+        jPanel2.add(cod1);
+        cod1.setBounds(238, 16, 126, 22);
+
+        jLabel3.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel3.setText("CÓDIGO:");
+        jPanel2.add(jLabel3);
+        jLabel3.setBounds(12, 48, 72, 28);
+
+        jLabel4.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel4.setText("ANO:");
+        jPanel2.add(jLabel4);
+        jLabel4.setBounds(12, 118, 72, 28);
+
+        jLabel5.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel5.setText("CÓDIGO:");
+        jPanel2.add(jLabel5);
+        jLabel5.setBounds(154, 13, 72, 28);
+
+        jLabel6.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel6.setText("DURAÇÃO:");
+        jPanel2.add(jLabel6);
+        jLabel6.setBounds(215, 118, 81, 28);
+
+        jLabel8.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel8.setText("CLASSIFICAÇÃO");
+        jPanel2.add(jLabel8);
+        jLabel8.setBounds(12, 189, 121, 28);
+
+        jLabel9.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel9.setText("CATEGORIA:");
+        jPanel2.add(jLabel9);
+        jLabel9.setBounds(12, 153, 95, 28);
+
+        jLabel11.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel11.setText("CAPA:");
+        jPanel2.add(jLabel11);
+        jLabel11.setBounds(15, 224, 53, 28);
+        jPanel2.add(jTextField2);
+        jTextField2.setBounds(89, 83, 137, 28);
+        jPanel2.add(cate);
+        cate.setBounds(112, 153, 68, 28);
+        jPanel2.add(jTextField1);
+        jTextField1.setBounds(89, 48, 137, 28);
+        jPanel2.add(capa);
+        capa.setBounds(80, 224, 137, 28);
+        jPanel2.add(jl);
+        jl.setBounds(138, 189, 53, 28);
+
+        try {
+            jFormattedTextField22.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        jPanel2.add(jFormattedTextField22);
+        jFormattedTextField22.setBounds(89, 121, 119, 22);
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jComboBox1);
+        jComboBox1.setBounds(215, 156, 218, 22);
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox2ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jComboBox2);
+        jComboBox2.setBounds(215, 188, 218, 22);
 
-        jButton4.setText("ok");
+        jButton1.setText("OK");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton1);
+        jButton1.setBounds(235, 226, 49, 25);
 
-        jButton5.setText("ok");
+        jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/DVD_VIDEO_logo.png"))); // NOI18N
+        jPanel2.add(jLabel12);
+        jLabel12.setBounds(510, 20, 280, 220);
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(245, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(27, 27, 27))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addComponent(jButton4)
-                        .addGap(54, 54, 54))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addComponent(jButton5)
-                        .addGap(214, 214, 214)))
-                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(49, 49, 49)
-                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(48, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29))
-        );
+        try {
+            jFormattedTextField1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##.##")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        jPanel2.add(jFormattedTextField1);
+        jFormattedTextField1.setBounds(300, 120, 26, 22);
+
+        jButton5.setText("OK");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton5);
+        jButton5.setBounds(370, 10, 70, 25);
 
         getContentPane().add(jPanel2);
-        jPanel2.setBounds(0, 80, 810, 330);
+        jPanel2.setBounds(0, 90, 890, 270);
 
-        jPanel3.setBackground(new java.awt.Color(153, 153, 153));
+        jPanel3.setLayout(null);
 
-        jButton1.setText("Alterar");
+        jButton2.setText("CANCELAR");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        jPanel3.add(jButton2);
+        jButton2.setBounds(640, 10, 130, 50);
 
-        jButton2.setText("Cancelar");
+        jButton3.setText("LIMPAR");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+        jPanel3.add(jButton3);
+        jButton3.setBounds(70, 10, 130, 50);
 
-        jButton3.setText("Limpar");
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(264, 264, 264)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(51, 51, 51)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(82, Short.MAX_VALUE))
-            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel3Layout.createSequentialGroup()
-                    .addGap(59, 59, 59)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(568, Short.MAX_VALUE)))
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 64, Short.MAX_VALUE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
-            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel3Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 64, Short.MAX_VALUE)
-                    .addContainerGap()))
-        );
+        jButton4.setText("ALTERAR");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+        jPanel3.add(jButton4);
+        jButton4.setBounds(360, 10, 130, 50);
 
         getContentPane().add(jPanel3);
-        jPanel3.setBounds(0, 410, 800, 90);
+        jPanel3.setBounds(0, 360, 880, 70);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+      Connection con = Conexao.AbrirConexao();
+        CategoriaDAO sql = new CategoriaDAO(con);
+        List<Categoria> lista = new ArrayList<>();
+        String nome = jComboBox1.getSelectedItem().toString();
+        lista =  sql.ConsultaCodigoCategoria(nome);
+
+        for( Categoria b : lista){
+            int a = b.getCodigo();
+         cate.setText(""+ a);
+        }
+        Conexao.FecharConexao(con);
+    }//GEN-LAST:event_jComboBox1ActionPerformed
+
+    private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
+    Connection con = Conexao.AbrirConexao();
+        ClassificacaoDAO sql = new ClassificacaoDAO(con);
+        List<Classificacao> lista = new ArrayList<>();
+        String nome = jComboBox2.getSelectedItem().toString();
+        lista =  sql.ConsultaCodigoClassificacao(nome);
+
+        for( Classificacao b : lista){
+            int a = b.getCodigo();
+            jl.setText(""+ a);
+        }
+    }//GEN-LAST:event_jComboBox2ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+       String codigo = cod1.getText();
+
+        if(codigo.equals("") ){
+            JOptionPane.showMessageDialog(null,"Digite um codigo para Atualizar","Video Locadora",JOptionPane.WARNING_MESSAGE);
+        }else{
+            Connection con = Conexao.AbrirConexao();
+            FilmeDAO sql = new FilmeDAO(con);
+            int cod  = Integer.parseInt(codigo);
+            
+            if(sql.Testar_Filme(cod) == false){
+                JOptionPane.showMessageDialog(null,"Codigo não Encontrado no Banco","Vidio Locadora",JOptionPane.WARNING_MESSAGE);
+                Conexao.FecharConexao(con);
+                jTextField1.setText("");
+                jTextField6.setText("");
+                jTextField2.setText("");
+                jFormattedTextField22.setText("");
+                jFormattedTextField1.setText("");
+                jComboBox1.setSelectedItem("");
+                jComboBox2.setSelectedItem("");
+               cate.setText("");
+                jl.setText("");
+                cod1.setText("");
+            }else{
+
+            jTextField1.setText("");
+            jTextField6.setText("");
+            jTextField2.setText("");
+            jFormattedTextField22.setText("");
+            jFormattedTextField1.setText("");
+            jComboBox1.setSelectedItem("");
+            jComboBox2.setSelectedItem("");
+
+            InserirDados(cod);
+
+            cod1.setText("");
+        }
+}
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+       FileNameExtensionFilter filtro =  new FileNameExtensionFilter("Formatos de Arquivo JPEG(*.JPG;*.JPEG)","jpg","jpeg");
+        JFileChooser arquivo = new JFileChooser();
+        arquivo.addChoosableFileFilter(filtro);
+        arquivo.setDialogTitle("Abrir arquivo");
+        File rota = new File("C://Users/");
+        arquivo.setCurrentDirectory(null);
+
+        int option = arquivo.showOpenDialog(null);
+
+        if (option == JFileChooser.APPROVE_OPTION) {
+            File file = arquivo.getSelectedFile();
+            jTextField6.setText(String.valueOf(file));
+            Image  foto = getToolkit().getImage(jTextField6.getText());
+            foto = foto.getScaledInstance(199, 199,Image.SCALE_DEFAULT);
+            jLabel12.setIcon(new ImageIcon(foto));
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Não foi possivel carregar capa.");
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+     String titulo =  jTextField2.getText();
+    String capa = jTextField6.getText();
+    String duracao  = jFormattedTextField1.getText();
+      
+    String codigo =   jTextField1.getText();
+    String  anoo =  jFormattedTextField22.getText();
+    String categoriaa = cate.getText();
+    String classificacaoo =  jl.getText();
+                
+    if(titulo.equals("") || capa.equals("") || anoo.equals("") || duracao.equals("") || categoriaa.equals("") || classificacaoo.equals("")){
+        JOptionPane.showMessageDialog(null, "Nenhum campo pode estar vazio" , "Video Locadora" , JOptionPane.WARNING_MESSAGE);
+
+    }else{
+        Connection con = Conexao.AbrirConexao();
+        FilmeDAO sql = new FilmeDAO(con);
+        
+        int cod = Integer.parseInt(codigo);
+        int categoria = Integer.parseInt(categoriaa);
+        int classificacao = Integer.parseInt(classificacaoo);
+        int ano = Integer.parseInt(anoo);
+        
+        Filme a  = new Filme();
+        a.setCodigo(cod);
+        a.setCod_categoria(categoria);
+        a.setCod_classificacao(classificacao);
+        a.setAno(ano);
+        a.setDuracao(duracao);
+        a.setTitulo(titulo);
+        a.setCapa(capa);
+
+        sql.Alterar_Filme(a);
+        Conexao.FecharConexao(con);
+            JOptionPane.showMessageDialog(null, "Cadastro Realizado com sucesso","Video Locadora",JOptionPane.INFORMATION_MESSAGE);
+            new Menu().setVisible(true);
+            dispose();
+        }
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+          jTextField6.setText("");
+                jTextField2.setText("");
+                jFormattedTextField22.setText("");
+                jFormattedTextField1.setText("");
+                jComboBox1.setSelectedItem("");
+                jComboBox2.setSelectedItem("");
+               cate.setText("");
+                jl.setText("");
+              
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        new Menu().setVisible(true);
+        dispose();
+        
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -260,6 +498,9 @@ public class AlterarFilme extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField capa;
+    private javax.swing.JTextField cate;
+    private javax.swing.JTextField cod1;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
@@ -267,7 +508,12 @@ public class AlterarFilme extends javax.swing.JFrame {
     private javax.swing.JButton jButton5;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
+    private javax.swing.JFormattedTextField jFormattedTextField1;
+    private javax.swing.JFormattedTextField jFormattedTextField22;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -275,14 +521,13 @@ public class AlterarFilme extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
     private javax.swing.JTextField jTextField6;
+    private javax.swing.JTextField jl;
     // End of variables declaration//GEN-END:variables
 }

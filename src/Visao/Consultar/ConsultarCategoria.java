@@ -22,6 +22,9 @@ public class ConsultarCategoria extends javax.swing.JFrame {
     public ConsultarCategoria() {
         initComponents();
         AtualizaTable();
+        setResizable(false);
+        setSize(1000,500);
+         setLocationRelativeTo(this);
     }
     
         private  void AtualizaTable(){

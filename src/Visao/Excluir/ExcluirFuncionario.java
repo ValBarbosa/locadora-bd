@@ -26,6 +26,9 @@ public class ExcluirFuncionario extends javax.swing.JFrame {
     public ExcluirFuncionario() {
         initComponents();
         AtualizaCombo();
+        setResizable(false);
+        setSize(550,350);
+         setLocationRelativeTo(this);
         
     }
 
@@ -65,6 +68,7 @@ private void AtualizaCombo(){
         campo = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
+        jPanel4 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
@@ -110,7 +114,7 @@ private void AtualizaCombo(){
             }
         });
         getContentPane().add(jButton1);
-        jButton1.setBounds(90, 260, 130, 40);
+        jButton1.setBounds(100, 260, 130, 40);
 
         jPanel2.setBackground(new java.awt.Color(153, 153, 153));
         jPanel2.setLayout(null);
@@ -133,11 +137,27 @@ private void AtualizaCombo(){
         jLabel2.setBounds(50, 50, 90, 32);
 
         getContentPane().add(jPanel2);
-        jPanel2.setBounds(0, 100, 560, 130);
+        jPanel2.setBounds(0, 100, 550, 130);
 
         jPanel3.setLayout(null);
         getContentPane().add(jPanel3);
         jPanel3.setBounds(0, 230, 560, 0);
+
+        jPanel4.setBackground(new java.awt.Color(204, 204, 204));
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 550, Short.MAX_VALUE)
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 90, Short.MAX_VALUE)
+        );
+
+        getContentPane().add(jPanel4);
+        jPanel4.setBounds(0, 230, 550, 90);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -219,6 +239,7 @@ private void AtualizaCombo(){
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }

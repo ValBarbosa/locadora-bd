@@ -5,6 +5,8 @@
  */
 package Principal;
 
+import Locacao.ControleLocacao;
+import Locacao.EfetuarDevolucao;
 import Visao.Alterar.AlterarCategoria;
 import Visao.Alterar.AlterarClassificacao;
 import Visao.Alterar.AlterarCliente;
@@ -18,6 +20,7 @@ import Visao.Cadastrar.CadastrarCliente;
 import Visao.Cadastrar.CadastrarDVD;
 import Visao.Cadastrar.CadastrarFilme;
 import Visao.Cadastrar.CadastrarFuncionario;
+import Visao.Consultar.ConsultaClassificacao;
 import Visao.Consultar.ConsultarCategoria;
 import Visao.Consultar.ConsultarCliente;
 import Visao.Consultar.ConsultarDVD;
@@ -37,7 +40,7 @@ public class Menu extends javax.swing.JFrame {
         initComponents();
       
         setResizable(false);
-        setSize(1000,700);
+        setSize(1000,600);
           setLocationRelativeTo(this);
     }
 
@@ -109,19 +112,24 @@ public class Menu extends javax.swing.JFrame {
 
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/DVD3.png"))); // NOI18N
         jButton4.setText("Devolução");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(117, 117, 117)
+                .addGap(104, 104, 104)
                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(62, 62, 62)
+                .addGap(156, 156, 156)
                 .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(59, 59, 59)
+                .addGap(156, 156, 156)
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(466, Short.MAX_VALUE))
+                .addContainerGap(288, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -364,7 +372,7 @@ public class Menu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-         new ControleDelocacao().setVisible(true);
+        new ControleLocacao().setVisible(true);
         dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
 
@@ -456,7 +464,8 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem10ActionPerformed
 
     private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
-
+   new ConsultaClassificacao().setVisible(true);
+        dispose();
     }//GEN-LAST:event_jMenuItem11ActionPerformed
 
     private void jMenuItem12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem12ActionPerformed
@@ -493,6 +502,11 @@ public class Menu extends javax.swing.JFrame {
         new ExcluirFuncionario().setVisible(true);
         dispose();
     }//GEN-LAST:event_jMenuItem24ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        new EfetuarDevolucao().setVisible(true);
+        dispose();
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
      * @param args the command line arguments

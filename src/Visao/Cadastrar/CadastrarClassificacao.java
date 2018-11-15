@@ -24,11 +24,10 @@ public class CadastrarClassificacao extends javax.swing.JFrame {
 
     public CadastrarClassificacao() {
         initComponents();
-        setResizable(true);
+     ProximoId();
          setResizable(false);
-        setSize(500,400);
-        setLocationRelativeTo(this);
-        ProximoId();
+        setSize(600,450);
+         setLocationRelativeTo(this);
     }
 
    
@@ -116,6 +115,11 @@ public class CadastrarClassificacao extends javax.swing.JFrame {
         nome.setBounds(130, 180, 244, 34);
 
         jTextField1.setEditable(false);
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jTextField1);
         jTextField1.setBounds(130, 130, 244, 31);
         getContentPane().add(preco);
@@ -137,12 +141,16 @@ public class CadastrarClassificacao extends javax.swing.JFrame {
         getContentPane().add(jPanel2);
         jPanel2.setBounds(0, 100, 600, 210);
 
+        jPanel3.setLayout(null);
+
         jButton2.setText("Cadastrar");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
             }
         });
+        jPanel3.add(jButton2);
+        jButton2.setBounds(210, 10, 121, 50);
 
         jButton3.setText("Limpar");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -150,6 +158,8 @@ public class CadastrarClassificacao extends javax.swing.JFrame {
                 jButton3ActionPerformed(evt);
             }
         });
+        jPanel3.add(jButton3);
+        jButton3.setBounds(50, 10, 121, 50);
 
         jButton4.setText("Cancelar");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
@@ -157,30 +167,8 @@ public class CadastrarClassificacao extends javax.swing.JFrame {
                 jButton4ActionPerformed(evt);
             }
         });
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(47, 47, 47)
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(42, 42, 42)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(50, 50, 50)
-                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(98, Short.MAX_VALUE))
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
-        );
+        jPanel3.add(jButton4);
+        jButton4.setBounds(380, 10, 121, 50);
 
         getContentPane().add(jPanel3);
         jPanel3.setBounds(0, 310, 600, 80);
@@ -229,6 +217,10 @@ public class CadastrarClassificacao extends javax.swing.JFrame {
  dispose();
 
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField1ActionPerformed
 
     /**
      * @param args the command line arguments

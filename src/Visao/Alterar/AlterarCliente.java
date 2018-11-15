@@ -4,25 +4,46 @@
  * and open the template in the editor.
  */
 package Visao.Alterar;
-
 import DAO.ClienteDAO;
 import DAO.Conexao;
 import Modelo.Cliente;
-import Visao.Cadastrar.*;
+import Principal.Menu;
 import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author Valéria
- */
 public class AlterarCliente extends javax.swing.JFrame {
 
-    /**
-     * Creates new form CadastrarCliente
-     */
     public AlterarCliente() {
         initComponents();
+        setTitle("Alterar Informações");
+         setResizable(false);
+        setSize(740,630);
+         setLocationRelativeTo(this);
+    }
+
+
+    private void InserirDados(int cod){
+    Connection con = Conexao.AbrirConexao();
+    ClienteDAO sql  = new ClienteDAO(con);
+    List<Cliente> lista = new ArrayList<>();
+    lista = sql.CapturarCliente(cod);
+    for(Cliente a : lista){
+    nr.setText(""+a.getCodigo());
+    nome.setText(""+a.getNome());
+    jtf_cep.setText(""+a.getCEP());
+    nr.setText(""+a.getNumero());
+    jtf_bairro.setText(""+a.getBairro());
+    jtf_email.setText(""+a.getEmail());
+    jtf_telefone.setText(""+a.getTelefone());
+    jtf_rua.setText(""+a.getRua());
+    jtf_nascimento.setText(""+a.getNascimento());
+    rg.setText(""+a.getRG());
+    jtf_cpf.setText(""+a.getCPF());
+    
+    }
+    Conexao.FecharConexao(con);
     }
 
     /**
@@ -54,17 +75,17 @@ public class AlterarCliente extends javax.swing.JFrame {
         jtf_telefone = new javax.swing.JFormattedTextField();
         jLabel7 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jtf_rg = new javax.swing.JTextField();
+        rg = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
-        jtf_nome = new javax.swing.JTextField();
+        nome = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jtf_numero = new javax.swing.JTextField();
-        jtf_codigo = new javax.swing.JTextField();
+        codigo = new javax.swing.JTextField();
+        cod1 = new javax.swing.JTextField();
         btaltera = new javax.swing.JButton();
         jtf_cpf = new javax.swing.JFormattedTextField();
         jLabel11 = new javax.swing.JLabel();
         jtf_nascimento = new javax.swing.JFormattedTextField();
-        jTextField5 = new javax.swing.JTextField();
+        nr = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jtf_cep = new javax.swing.JFormattedTextField();
@@ -121,19 +142,24 @@ public class AlterarCliente extends javax.swing.JFrame {
         });
 
         jButton3.setText("Limpar");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(83, 83, 83)
+                .addContainerGap(124, Short.MAX_VALUE)
                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 109, Short.MAX_VALUE)
+                .addGap(68, 68, 68)
                 .addComponent(alterar, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(159, 159, 159)
+                .addGap(65, 65, 65)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(111, 111, 111))
+                .addGap(205, 205, 205))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -160,7 +186,7 @@ public class AlterarCliente extends javax.swing.JFrame {
         jLabel14.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel14.setText("CODIGO:");
         jPanel3.add(jLabel14);
-        jLabel14.setBounds(10, 20, 130, 30);
+        jLabel14.setBounds(20, 20, 130, 30);
         jPanel3.add(jtf_email);
         jtf_email.setBounds(140, 320, 250, 30);
 
@@ -200,24 +226,26 @@ public class AlterarCliente extends javax.swing.JFrame {
         jLabel5.setText("RG:");
         jPanel3.add(jLabel5);
         jLabel5.setBounds(20, 150, 50, 30);
-        jPanel3.add(jtf_rg);
-        jtf_rg.setBounds(140, 150, 250, 30);
+        jPanel3.add(rg);
+        rg.setBounds(140, 150, 250, 30);
 
         jLabel10.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel10.setText("CPF:");
         jPanel3.add(jLabel10);
         jLabel10.setBounds(400, 200, 50, 30);
-        jPanel3.add(jtf_nome);
-        jtf_nome.setBounds(140, 100, 380, 30);
+        jPanel3.add(nome);
+        nome.setBounds(140, 100, 380, 30);
 
         jLabel4.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel4.setText("Nome:");
         jPanel3.add(jLabel4);
         jLabel4.setBounds(20, 110, 80, 30);
-        jPanel3.add(jtf_numero);
-        jtf_numero.setBounds(140, 60, 190, 30);
-        jPanel3.add(jtf_codigo);
-        jtf_codigo.setBounds(140, 20, 222, 32);
+
+        codigo.setEditable(false);
+        jPanel3.add(codigo);
+        codigo.setBounds(140, 60, 190, 30);
+        jPanel3.add(cod1);
+        cod1.setBounds(140, 20, 222, 32);
 
         btaltera.setText("OK");
         btaltera.addActionListener(new java.awt.event.ActionListener() {
@@ -248,8 +276,8 @@ public class AlterarCliente extends javax.swing.JFrame {
         }
         jPanel3.add(jtf_nascimento);
         jtf_nascimento.setBounds(620, 160, 100, 30);
-        jPanel3.add(jTextField5);
-        jTextField5.setBounds(460, 240, 180, 30);
+        jPanel3.add(nr);
+        nr.setBounds(460, 240, 180, 30);
 
         jLabel12.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel12.setText("Nº");
@@ -276,20 +304,48 @@ public class AlterarCliente extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btalteraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btalteraActionPerformed
+    String codigo = cod1.getText();
+        Connection con = Conexao.AbrirConexao();
+        ClienteDAO sql = new ClienteDAO(con);
+        int cod  = Integer.parseInt(codigo);
+      
+        if(sql.Testar_Cliente(cod) == false){
+        JOptionPane.showMessageDialog(null,"Codigo não Encontrado no Banco","Vidio Locadora",JOptionPane.WARNING_MESSAGE);
+        Conexao.FecharConexao(con);
+        }
         
+        if(codigo.equals("")){
+        JOptionPane.showMessageDialog(null,"Digite um codigo para Atualizar","Video Locadora",JOptionPane.WARNING_MESSAGE);
+        }
+      this.codigo.setText("");
+       nome.setText("");
+       jtf_cep.setText("");
+       nr.setText("");
+       jtf_bairro.setText("");
+       jtf_email.setText("");
+       jtf_telefone.setText("");
+       jtf_rua.setText("");
+       jtf_nascimento.setText("");
+       rg.setText("");
+      jtf_cpf.setText("");
+        
+        InserirDados(cod);
+        
+          
     }//GEN-LAST:event_btalteraActionPerformed
 
     private void alterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_alterarActionPerformed
-          String nome  = jtf_nome.getText();
+          String nome1  = nome.getText();
           String nascimento = jtf_nascimento.getText();
           String cep = jtf_cep.getText();
           String rua = jtf_rua.getText();
-          String numero = jtf_numero.getText();
+          String numero = codigo.getText();
           String bairro = jtf_bairro.getText(); 
           String email = jtf_email.getText();
           String fone = jtf_telefone.getText();
           String cpf = jtf_cpf.getText();
-          String rg = jtf_rg.getText();
+          String rg1 = rg.getText();
+          String cod = codigo.getText();
           if(nome.equals("")){
               JOptionPane.showMessageDialog(null, "nenhum campo pode estar vazio", "video locadora", JOptionPane.WARNING_MESSAGE);
               
@@ -300,7 +356,7 @@ public class AlterarCliente extends javax.swing.JFrame {
               int n = Integer.parseInt(numero);
               Cliente a = new Cliente();
               
-              a.setNome(nome);
+              a.setNome(nome1);
               a.setNascimento(nascimento);
               a.setCEP(cep);
               a.setRua(rua);
@@ -309,24 +365,37 @@ public class AlterarCliente extends javax.swing.JFrame {
               a.setEmail(email);
               a.setTelefone(fone);
               a.setCPF(cpf);
-              a.setRG(rg);
-              
-              //sql.Alterar_Cliente(a);
+              a.setRG(rg1);
+           
+             
               Conexao.FecharConexao(con);
-              jtf_nome.setText("");
+              nome.setText("");
               jtf_cep.setText("");
-              jtf_numero.setText("");
+              codigo.setText("");
               jtf_bairro.setText("");
               jtf_email.setText("");
               jtf_telefone.setText("");
               jtf_rua.setText("");
               jtf_nascimento.setText("");
-              jtf_rg.setText("");
+              rg.setText("");
               jtf_cpf.setText("");
               JOptionPane.showMessageDialog(null, "cadastro realizado com sucesso", "video locadora", JOptionPane.INFORMATION_MESSAGE);
               dispose();
                  }
     }//GEN-LAST:event_alterarActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+         this.nome.setText("");
+        this.jtf_nascimento.setText("");
+        this.jtf_cep.setText("");
+        this.jtf_rua.setText("");
+        this.nr.setText("");
+        this.jtf_bairro.setText("");
+        this.jtf_email.setText("");
+        this.jtf_telefone.setText("");
+        this.jtf_cpf.setText("");
+        this.rg.setText("");
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -367,6 +436,8 @@ public class AlterarCliente extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton alterar;
     private javax.swing.JButton btaltera;
+    private javax.swing.JTextField cod1;
+    private javax.swing.JTextField codigo;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
     private javax.swing.JFormattedTextField jFormattedTextField1;
@@ -387,17 +458,15 @@ public class AlterarCliente extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JTextField jTextField5;
     private javax.swing.JTextField jtf_bairro;
     private javax.swing.JFormattedTextField jtf_cep;
-    private javax.swing.JTextField jtf_codigo;
     private javax.swing.JFormattedTextField jtf_cpf;
     private javax.swing.JTextField jtf_email;
     private javax.swing.JFormattedTextField jtf_nascimento;
-    private javax.swing.JTextField jtf_nome;
-    private javax.swing.JTextField jtf_numero;
-    private javax.swing.JTextField jtf_rg;
     private javax.swing.JTextField jtf_rua;
     private javax.swing.JFormattedTextField jtf_telefone;
+    private javax.swing.JTextField nome;
+    private javax.swing.JTextField nr;
+    private javax.swing.JTextField rg;
     // End of variables declaration//GEN-END:variables
 }

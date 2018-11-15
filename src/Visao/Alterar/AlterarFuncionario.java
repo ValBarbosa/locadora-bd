@@ -5,19 +5,38 @@
  */
 package Visao.Alterar;
 
-import Visao.Cadastrar.*;
+import DAO.CategoriaDAO;
+import DAO.Conexao;
+import DAO.FuncionarioDAO;
+import Modelo.Categoria;
+import Modelo.Funcionario;
+import Principal.Menu;
+import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
 
-/**
- *
- * @author Valéria
- */
 public class AlterarFuncionario extends javax.swing.JFrame {
 
-    /**
-     * Creates new form CadastrarFuncionario
-     */
     public AlterarFuncionario() {
         initComponents();
+       setResizable(false);
+        setSize(740,630);
+         setLocationRelativeTo(this);
+    }
+   
+    private void InserirDados(int cod){
+    Connection con = Conexao.AbrirConexao();
+    FuncionarioDAO sql  = new FuncionarioDAO(con);
+    List<Funcionario> lista = new ArrayList<>();
+    lista = sql.CapturarFuncionario(cod);
+    for(Funcionario a : lista){
+    jTextFieldcod.setText(""+a.getCod());
+    jTextFieldnome.setText(""+a.getNome());
+    jTextFieldlogin.setText(""+a.getLogin());
+    jPasswordFieldsenha.setText(""+a.getSenha());
+    }
+    Conexao.FecharConexao(con);
     }
 
     /**
@@ -37,17 +56,17 @@ public class AlterarFuncionario extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jPasswordField1 = new javax.swing.JPasswordField();
-        jTextField4 = new javax.swing.JTextField();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
+        jPasswordFieldsenha = new javax.swing.JPasswordField();
+        jTextFieldlogin = new javax.swing.JTextField();
+        jTextFieldnome = new javax.swing.JTextField();
+        jTextFieldcod = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        cod = new javax.swing.JTextField();
         jButton4 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -104,14 +123,16 @@ public class AlterarFuncionario extends javax.swing.JFrame {
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/pass_key.png"))); // NOI18N
         jPanel2.add(jLabel2);
         jLabel2.setBounds(530, 25, 149, 271);
-        jPanel2.add(jPasswordField1);
-        jPasswordField1.setBounds(120, 230, 310, 40);
-        jPanel2.add(jTextField4);
-        jTextField4.setBounds(120, 180, 310, 40);
-        jPanel2.add(jTextField1);
-        jTextField1.setBounds(120, 130, 310, 40);
-        jPanel2.add(jTextField2);
-        jTextField2.setBounds(120, 70, 310, 40);
+        jPanel2.add(jPasswordFieldsenha);
+        jPasswordFieldsenha.setBounds(120, 230, 310, 40);
+        jPanel2.add(jTextFieldlogin);
+        jTextFieldlogin.setBounds(120, 180, 310, 40);
+        jPanel2.add(jTextFieldnome);
+        jTextFieldnome.setBounds(120, 130, 310, 40);
+
+        jTextFieldcod.setEditable(false);
+        jPanel2.add(jTextFieldcod);
+        jTextFieldcod.setBounds(120, 70, 310, 40);
 
         getContentPane().add(jPanel2);
         jPanel2.setBounds(0, 180, 740, 290);
@@ -124,8 +145,18 @@ public class AlterarFuncionario extends javax.swing.JFrame {
         });
 
         jButton2.setText("Alterar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("Cancelar");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -174,7 +205,7 @@ public class AlterarFuncionario extends javax.swing.JFrame {
                 .addGap(31, 31, 31)
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cod, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(28, 28, 28)
                 .addComponent(jButton4)
                 .addContainerGap(327, Short.MAX_VALUE))
@@ -185,7 +216,7 @@ public class AlterarFuncionario extends javax.swing.JFrame {
                 .addGap(32, 32, 32)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cod, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jButton4))
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(16, Short.MAX_VALUE))
@@ -198,12 +229,75 @@ public class AlterarFuncionario extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+         jTextFieldcod.setText("");
+            jTextFieldlogin.setText("");
+            jTextFieldnome.setText("");
+            jPasswordFieldsenha.setText("");
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
+          String codigo = cod.getText();
+         if(codigo.equals("")){
+            JOptionPane.showMessageDialog(null," Novo codigo para Atualizar","Video Locadora",JOptionPane.WARNING_MESSAGE);
+        }else{
+        Connection con = Conexao.AbrirConexao();
+        FuncionarioDAO sql = new FuncionarioDAO(con);
+        int cod  = Integer.parseInt(codigo);
+        
+        if(sql.Testar_Funcionario(cod) == false){
+            JOptionPane.showMessageDialog(null,"Codigo não Encontrado no Banco","Video Locadora",JOptionPane.WARNING_MESSAGE);
+            Conexao.FecharConexao(con);
+        }
+        jTextFieldcod.setText("");
+      jTextFieldlogin.setText("");
+      jTextFieldnome.setText("");
+      jPasswordFieldsenha.setText("");
+
+        InserirDados(cod);
+      
+         }
+       
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+       String nome  =  this.jTextFieldnome.getText();
+        String login = this.jTextFieldlogin.getText();
+        String senha = this.jPasswordFieldsenha.getText();
+        String codigo = this.jTextFieldcod.getText();
+
+        if(nome.equals("") ){
+            JOptionPane.showMessageDialog(null, "Nenhum campo pode estar vazio" , "Video Locadora" , JOptionPane.WARNING_MESSAGE);
+
+        }else{
+            Connection con = Conexao.AbrirConexao();
+            FuncionarioDAO sql = new  FuncionarioDAO(con);
+            int cod = Integer.parseInt(codigo);
+             Funcionario a  = new  Funcionario();
+            a.setCod(cod);
+            a.setNome(nome);
+            a.setLogin(login);
+            a.setSenha(senha);
+            
+           
+            sql.Alterar_Funcionario(a);
+            Conexao.FecharConexao(con);
+
+            jTextFieldcod.setText("");
+            jTextFieldlogin.setText("");
+            jTextFieldnome.setText("");
+            jPasswordFieldsenha.setText("");
+
+
+            JOptionPane.showMessageDialog(null, "Cadastro Realizado com sucesso","Video Locadora",JOptionPane.INFORMATION_MESSAGE);
+            new Menu().setVisible(true);
+            dispose();
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+          new Menu().setVisible(true);
+        dispose();
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -242,6 +336,7 @@ public class AlterarFuncionario extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField cod;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
@@ -257,10 +352,9 @@ public class AlterarFuncionario extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
+    private javax.swing.JPasswordField jPasswordFieldsenha;
+    private javax.swing.JTextField jTextFieldcod;
+    private javax.swing.JTextField jTextFieldlogin;
+    private javax.swing.JTextField jTextFieldnome;
     // End of variables declaration//GEN-END:variables
 }
