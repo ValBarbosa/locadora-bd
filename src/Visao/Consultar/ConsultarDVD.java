@@ -19,6 +19,9 @@ public class ConsultarDVD extends javax.swing.JFrame {
     public ConsultarDVD() {
         initComponents();
         AtualizaTable();
+        setResizable(false);
+        setSize(1000,500);
+         setLocationRelativeTo(this);
     }
     
  private  void AtualizaTable(){

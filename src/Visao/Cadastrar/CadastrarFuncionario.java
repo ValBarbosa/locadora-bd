@@ -25,9 +25,10 @@ import javax.swing.JOptionPane;
 public class CadastrarFuncionario extends javax.swing.JFrame {
     public CadastrarFuncionario() {
         initComponents();
-        setResizable(false);
-        setLocationRelativeTo(this);
         ProximoId();
+        setResizable(false);
+        setSize(800,550);
+         setLocationRelativeTo(this);
     }
      private void ProximoId(){
         Connection con = Conexao.AbrirConexao();
@@ -74,6 +75,11 @@ public class CadastrarFuncionario extends javax.swing.JFrame {
         jTextField1Nome.setBounds(110, 230, 310, 40);
 
         jTextField.setEditable(false);
+        jTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldActionPerformed(evt);
+            }
+        });
         getContentPane().add(jTextField);
         jTextField.setBounds(110, 170, 310, 40);
         getContentPane().add(jTextField4Login);
@@ -164,6 +170,8 @@ public class CadastrarFuncionario extends javax.swing.JFrame {
         getContentPane().add(jPanel2);
         jPanel2.setBounds(0, 110, 800, 330);
 
+        jPanel3.setBackground(new java.awt.Color(204, 204, 204));
+
         jButton1.setText("Limpar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -201,7 +209,7 @@ public class CadastrarFuncionario extends javax.swing.JFrame {
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(23, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -210,7 +218,7 @@ public class CadastrarFuncionario extends javax.swing.JFrame {
         );
 
         getContentPane().add(jPanel3);
-        jPanel3.setBounds(0, 450, 800, 100);
+        jPanel3.setBounds(0, 440, 800, 80);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -259,6 +267,10 @@ public class CadastrarFuncionario extends javax.swing.JFrame {
          new Menu().setVisible(true);
         dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldActionPerformed
 
     /**
      * @param args the command line arguments

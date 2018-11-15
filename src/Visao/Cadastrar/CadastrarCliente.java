@@ -28,10 +28,10 @@ public class CadastrarCliente extends javax.swing.JFrame {
     public CadastrarCliente() {
         initComponents();
          setSize(870,700);
-        setLocationRelativeTo(this);
-        setResizable(true);
-        setTitle("Cadastrar Cliente");
         ProximoId();
+         setResizable(false);
+        setSize(850,630);
+         setLocationRelativeTo(this);
     }
    
      private void ProximoId(){

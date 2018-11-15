@@ -22,6 +22,9 @@ public class ExcluirCategoria extends javax.swing.JFrame {
     public ExcluirCategoria() {
         initComponents();
         AtualizaCombo();
+        setResizable(false);
+        setSize(550,350);
+         setLocationRelativeTo(this);
     }
 
 private void AtualizaCombo(){

@@ -5,19 +5,96 @@
  */
 package Locacao;
 
-/**
- *
- * @author Valéria
- */
-public class ConsultaDevolucao extends javax.swing.JFrame {
+import DAO.AluguelDAO;
+import DAO.CategoriaDAO;
+import DAO.ClienteDAO;
+import DAO.Conexao;
+import Modelo.Aluguel;
+import Modelo.Categoria;
+import Modelo.Cliente;
+import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
-    /**
-     * Creates new form ConsultaDevolucao
-     */
+public class ConsultaDevolucao extends javax.swing.JFrame {
+        
+    
+    
+
     public ConsultaDevolucao() {
         initComponents();
+        AtualizaTable();
+        AtualizaCombo();
+        jTextField1.setVisible(false);
     }
 
+    
+    
+    private  void AtualizaTable(){
+    Connection con = Conexao.AbrirConexao();
+   AluguelDAO bd = new AluguelDAO(con);
+    List<Aluguel> lista = new ArrayList<>();
+    lista = bd.ListarAluguel();
+    DefaultTableModel tbm = (DefaultTableModel) tabela.getModel();
+    while(tbm.getRowCount() > 0){
+    tbm.removeRow(0);
+    }
+    int i = 0;
+    for(Aluguel tab : lista){
+    tbm.addRow(new String[i]);
+   tabela.setValueAt(tab.getCod(), i,0);
+   tabela.setValueAt(tab.getCoddvd(), i,2);
+   tabela.setValueAt(tab.getCodcliente(), i,1);
+   tabela.setValueAt(tab.getHorario(), i,3);
+   tabela.setValueAt(tab.getData_aluguel(), i,4);
+   tabela.setValueAt(tab.getData_devolucao(), i,5);
+    
+    i++;
+    }
+    Conexao.FecharConexao(con);
+    }
+    
+    private  void pesqui(){
+       String codCli = jTextField1.getText();
+    Connection con = Conexao.AbrirConexao();
+   AluguelDAO bd = new AluguelDAO(con);
+    List<Aluguel> lista = new ArrayList<>();
+    lista = bd.PesquisarCliente(codCli);
+    DefaultTableModel tbm = (DefaultTableModel) tabela.getModel();
+    while(tbm.getRowCount() > 0){
+    tbm.removeRow(0);
+    }
+    int i = 0;
+    for(Aluguel tab : lista){
+    tbm.addRow(new String[i]);
+   tabela.setValueAt(tab.getCod(), i,0);
+   tabela.setValueAt(tab.getCodcliente(), i,1);
+   tabela.setValueAt(tab.getCoddvd(), i,2);
+   tabela.setValueAt(tab.getHorario(), i,3);
+   tabela.setValueAt(tab.getData_aluguel(), i,4);
+   tabela.setValueAt(tab.getData_devolucao(), i,5);
+    
+    i++;
+    }
+    Conexao.FecharConexao(con);
+    }
+
+private void AtualizaCombo(){
+    Connection con = Conexao.AbrirConexao();
+    ClienteDAO sql = new ClienteDAO(con);
+    
+    List<Cliente> lista = new ArrayList<>();
+    lista = sql.ListarComboCliente();
+    jComboBox1.addItem("");
+    
+    for( Cliente b : lista){
+    jComboBox1.addItem(b.getNome());
+    }
+    Conexao.FecharConexao(con);
+   
+}    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -32,8 +109,10 @@ public class ConsultaDevolucao extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<>();
+        jButton1 = new javax.swing.JButton();
+        jTextField1 = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tabela = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
@@ -68,7 +147,20 @@ public class ConsultaDevolucao extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel1.setText("Cliente:");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.setEditable(true);
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecionar cliente" }));
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
+
+        jButton1.setText("todos");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -77,24 +169,31 @@ public class ConsultaDevolucao extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(34, 34, 34)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 541, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(183, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(15, 15, 15)
+                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 426, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27)
+                .addComponent(jButton1)
+                .addContainerGap(156, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(61, 61, 61)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(60, 60, 60)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(39, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel3);
         jPanel3.setBounds(0, 100, 860, 150);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tabela.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -110,13 +209,33 @@ public class ConsultaDevolucao extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tabela);
 
         getContentPane().add(jScrollPane1);
         jScrollPane1.setBounds(0, 270, 840, 280);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+       AtualizaTable();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+       Connection con = Conexao.AbrirConexao();
+        ClienteDAO sql = new ClienteDAO(con);
+        List<Cliente> lista = new ArrayList<>();
+        String nome = jComboBox1.getSelectedItem().toString();
+        lista =  sql.ConsultaCodigoCliente(nome);
+        for( Cliente b : lista){
+        int a = b.getCodigo();
+        jTextField1.setText(""+ a);
+        }
+       
+        Conexao.FecharConexao(con);
+        
+        
+    }//GEN-LAST:event_jComboBox1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -154,12 +273,14 @@ public class ConsultaDevolucao extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTable tabela;
     // End of variables declaration//GEN-END:variables
 }

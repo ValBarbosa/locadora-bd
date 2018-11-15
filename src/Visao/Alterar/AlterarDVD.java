@@ -18,6 +18,9 @@ public class AlterarDVD extends javax.swing.JFrame {
      */
     public AlterarDVD() {
         initComponents();
+         setResizable(false);
+        setSize(650,680);
+         setLocationRelativeTo(this);
     }
 
     /**

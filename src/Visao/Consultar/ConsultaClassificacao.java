@@ -27,7 +27,8 @@ public class ConsultaClassificacao extends javax.swing.JFrame {
         initComponents();
         AtualizaTable();
         setResizable(false);
-        setLocationRelativeTo(this);
+        setSize(1000,500);
+         setLocationRelativeTo(this);
     }
     private  void AtualizaTable(){
     Connection con = Conexao.AbrirConexao();

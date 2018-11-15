@@ -20,10 +20,10 @@ public class ExcluirCliente extends javax.swing.JFrame {
 
     public ExcluirCliente() {
         initComponents();
-        setLocationRelativeTo(this);
-        setResizable(false);
-        setTitle("Excluir Cliente");
         AtualizaCombo();
+        setResizable(false);
+        setSize(550,350);
+         setLocationRelativeTo(this);
     }
 
 

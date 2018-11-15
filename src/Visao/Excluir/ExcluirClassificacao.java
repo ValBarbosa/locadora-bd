@@ -29,8 +29,9 @@ public class ExcluirClassificacao extends javax.swing.JFrame {
     public ExcluirClassificacao() {
         initComponents();
         AtualizaCombo();
-        setResizable(true);
-        setLocationRelativeTo(this);
+        setResizable(false);
+        setSize(550,350);
+         setLocationRelativeTo(this);
     }
 private void AtualizaCombo(){
     Connection con = Conexao.AbrirConexao();

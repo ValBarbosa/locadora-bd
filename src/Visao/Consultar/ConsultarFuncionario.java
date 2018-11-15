@@ -24,8 +24,9 @@ public class ConsultarFuncionario extends javax.swing.JFrame {
     public ConsultarFuncionario() {
         initComponents();
         AtualizaTable();
-        setResizable(false);
-        setLocationRelativeTo(this);
+     setResizable(false);
+        setSize(1000,500);
+         setLocationRelativeTo(this);
     }
   private  void AtualizaTable(){
     Connection con = Conexao.AbrirConexao();
